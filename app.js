@@ -1,12 +1,11 @@
-//넌적스 설치 : npm i nunjucks
-//express 설치 : npm i express
-// npm i nunjucks express 가능
-
+//express 세팅
 const express = require("express");
-const path = require("path");
-const nunjucks = require("nunjucks");
 const app = express();
 const hostname = "localhost";
+
+// 넌적스 세팅
+const path = require("path");
+const nunjucks = require("nunjucks");
 
 app.set("port", process.env.PORT || 3000);
 app.set("view engine", "html");
@@ -14,16 +13,18 @@ app.set("view engine", "html");
 nunjucks.configure("views", {
   express: app,
   watch: true,
+  autoescape: true,
 });
 
-const uploadRouter = require("./router/upload"); // router.get('/', (req, res) => { ... 을 불러옴
-const chartRouter = require("./router/chart"); // router.get('/', (req, res) => { ... 을 불러옴
+//router 세팅
+const uploadRouter = require("./routes/upload"); // router.get('/', (req, res) => { ... 을 불러옴
+const chartRouter = require("./routes/Chart"); // router.get('/', (req, res) => { ... 을 불러옴
 
 app.use("/", uploadRouter); // 각기 다른 경로에 미들웨어 장착
-app.use("/", chartRouter); // 각기 다른 경로에 미들웨어 장착
+app.use("/chart", chartRouter); // 각기 다른 경로에 미들웨어 장착
 
 app.use((req, res, next) => {
-  // 기본경로나 /user말고 다른곳 진입했을경우 실행
+  // '/'와 '/chart' 말고 다른곳 진입했을경우 실행
   res.status(404).send("Not Found");
 });
 
