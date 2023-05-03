@@ -7,22 +7,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>chart</title>
     <link rel="stylesheet" href="chart.css" />
+    <script src="chart.js"></script>
   </head>
   <body>
     <!--번호 선언-->
     {% set number = [1,2,3,4,5]%}
-    <div class="center">
-      <div class="Btn">
-        <span>{{title[0]}}</span>
-        {% for i in number%}
-        <button class="taskBtn">task{{loop.index}}</button>
-        {% endfor%}
+    <div id="center">
+      <div class="dropdown-label">
+        Graph Selection
+        <div class="dropdown">
+          <button class="dropbtn">
+            <span class="dropbtn_icon">more_horiz</span>
+            <span class="dropbtn_content">Select a graph...</span>
+            <span
+              class="dropbtn_click"
+              style="font-family: Material Icons; font-size: 16px; color: #3b3b3b; float: right"
+              onclick="dropdown()"
+              >arrow_drop_down</span
+            >
+          </button>
+          <div class="dropdown-content">
+            <div class="fastfood" onclick="showMenu(this.innerText)">bar graph</div>
+            <div class="fastfood" onclick="showMenu(this.innerText)">pie chart</div>
+            <div class="fastfood" onclick="showMenu(this.innerText)">line graph</div>
+            <div class="fastfood" onclick="showMenu(this.innerText)">table</div>
+          </div>
+        </div>
       </div>
-      <div class="Btn">
-        <span>{{title[1]}}</span>
-        {% for i in number%}
-        <button class="coreBtn">core{{loop.index}}</button>
-        {% endfor%}
+      <div id="btnBox">
+        <div class="btn">
+          <span>{{title[0]}}</span>
+          {% for i in number%}
+          <button class="taskBtn">task{{loop.index}}</button>
+          {% endfor%}
+        </div>
+        <div class="btn">
+          <span>{{title[1]}}</span>
+          {% for i in number%}
+          <button class="coreBtn">core{{loop.index}}</button>
+          {% endfor%}
+        </div>
       </div>
     </div>
   </body>
