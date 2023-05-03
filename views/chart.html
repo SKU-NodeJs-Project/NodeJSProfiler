@@ -1,0 +1,29 @@
+<!-- chart 페이지 실질적인 내용-->
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>chart</title>
+    <link rel="stylesheet" href="chart.css" />
+  </head>
+  <body>
+    <!--번호 선언-->
+    {% set number = [1,2,3,4,5]%}
+    <div class="center">
+      <div class="Btn">
+        <span>{{title[0]}}</span>
+        {% for i in number%}
+        <button class="taskBtn">task{{loop.index}}</button>
+        {% endfor%}
+      </div>
+      <div class="Btn">
+        <span>{{title[1]}}</span>
+        {% for i in number%}
+        <button class="coreBtn">core{{loop.index}}</button>
+        {% endfor%}
+      </div>
+    </div>
+  </body>
+</html>
