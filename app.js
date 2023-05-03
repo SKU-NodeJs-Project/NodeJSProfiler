@@ -17,8 +17,8 @@ nunjucks.configure("views", {
 });
 
 //router 세팅
-const uploadRouter = require("./routes/upload"); // router.get('/', (req, res) => { ... 을 불러옴
-const chartRouter = require("./routes/Chart"); // router.get('/', (req, res) => { ... 을 불러옴
+const uploadRouter = require("./routes/upload.js"); // router.get('/', (req, res) => { ... 을 불러옴
+const chartRouter = require("./routes/chart.js"); // router.get('/', (req, res) => { ... 을 불러옴
 
 app.use("/", uploadRouter); // 각기 다른 경로에 미들웨어 장착
 app.use("/chart", chartRouter); // 각기 다른 경로에 미들웨어 장착
