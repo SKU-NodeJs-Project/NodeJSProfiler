@@ -1,54 +1,32 @@
-// window.onload = () => {
-//   document.querySelector(".dropbtn_click").onclick = () => {
-//     dropdown();
-//   };
-//   document.getElementsByClassName(".fastfood").onclick = () => {
-//     showMenu(value);
-//   };
-//   const dropdown = () => {
-//     var v = document.querySelector(".dropdown-content");
-//     var dropbtn = document.querySelector(".dropbtn");
-//     v.classList.toggle("show");
-//     dropbtn.style.borderColor = "rgb(94, 94, 94)";
-//   };
+const graphPrint = document.querySelector(".print");
+const dropdown = document.querySelector(".dropdown");
+const toggleButton = document.querySelector(".dropdown-toggle");
+const menu = document.querySelector(".dropdown-menu");
+const options = document.querySelectorAll(".dropdown-option");
+const nextButton = document.querySelector(".next-button");
 
-//   const showMenu = (value) => {
-//     var dropbtn_icon = document.querySelector(".dropbtn_icon");
-//     var dropbtn_content = document.querySelector(".dropbtn_content");
-//     var dropbtn_click = document.querySelector(".dropbtn_click");
-//     var dropbtn = document.querySelector(".dropbtn");
+toggleButton.addEventListener("click", function () {
+  menu.classList.toggle("show");
+});
 
-//     dropbtn_icon.innerText = "";
-//     dropbtn_content.innerText = value;
-//     dropbtn_content.style.color = "#252525";
-//     dropbtn.style.borderColor = "#3992a8";
-//   };
-// };
-// window.onclick = (e) => {
-//   if (!e.target.matches(".dropbtn_click")) {
-//     var dropdowns = document.getElementsByClassName(".dropdown-content");
+for (const option of options) {
+  option.addEventListener("click", function () {
+    const graphName = option.textContent.trim();
+    toggleButton.textContent = graphName;
+    toggleButton.classList.add("selected");
+    // nextButton.removeAttribute("disabled");
 
-//     var dropbtn_icon = document.querySelector(".dropbtn_icon");
-//     var dropbtn_content = document.querySelector(".dropbtn_content");
-//     var dropbtn_click = document.querySelector(".dropbtn_click");
-//     var dropbtn = document.querySelector(".dropbtn");
+    if (graphName) {
+      openGraph();
+      graphPrint.textContent = graphName;
+    }
+  });
+}
+// 그래프 보여주는 로직
+function openGraph() {
+  console.log("hi");
+}
 
-//     var i;
-//     for (i = 0; i < dropdowns.length; i++) {
-//       var openDropdown = dropdowns[i];
-//       if (openDropdown.classList.contains("show")) {
-//         openDropdown.classList.remove("show");
-//       }
-//     }
-//   }
-// };
-
-window.onload = () => {
-  document.querySelector(".graph").onclick = () => {
-    openGraph();
-  };
-
-  const openGraph = () => {
-    console.log("ok");
-  };
-};
+toggleButton.addEventListener("blur", function () {
+  menu.classList.remove("show");
+});

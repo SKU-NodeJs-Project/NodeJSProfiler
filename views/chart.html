@@ -7,48 +7,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>chart</title>
     <link rel="stylesheet" href="chart.css" />
-    <script src="chart.js"></script>
   </head>
   <body>
     <!--번호 배열-->
     {% set number = [1,2,3,4,5]%}
     <!--그래프 종류 배열-->
     {% set graph = ["bar graph","pie chart","line graph","table"]%}
-    <!-- <div id="center">
-      <div class="dropdown">
-        <section id="theme">
-          <div class="select">
-            <div class="text">선택</div>
-            <ul class="option-list">
-              <li class="option">샤인머스켓</li>
-              <li class="option">체리</li>
-              <li class="option">홍시</li>
-            </ul>
-          </div>
-        </section> -->
-        <form>
-          <select id="graph">
-            <option value="">-- Graph Selection --</option>
-            {% for i in graph %}
-            <option class="graph" value="{{graph[loop.index0]}}" onclick="openGraph()">{{graph[loop.index0]}}</option>
-            {% endfor %}
-          </select>
-        </form>
+    <div id="center">
+      <div class="print">
       </div>
-      <div id="btnBox">
-        <div class="btn">
+      <!--그래프 드롭박스-->
+      <div id="form">
+        <div class="dropdown">
+          <button type="button" class="dropdown-toggle">
+            그래프를 선택해주세요
+          </button>
+          <ul class="dropdown-menu">
+            {% for i in graph%}
+            <li class="dropdown-item">
+              <button
+                type="button"
+                value="{{loop.index}}"
+                class="dropdown-option"
+              >
+                {{graph[loop.index0]}}
+              </button>
+            </li>
+            {%endfor%}
+            </li>
+          </ul>
+        </div>
+        <!--선택버튼-->
+      <!-- <button type="submit" class="next-button" disabled>확인</button> -->
+      <!--작업버튼-->
+      <div id="btnContainer">
           <span>{{title[0]}}</span>
           {% for i in number %}
           <button class="taskBtn">task{{loop.index}}</button>
           {% endfor %}
-        </div>
-        <div class="btn">
+      </div>
+      <div id="btnContainer">
           <span>{{title[1]}}</span>
           {% for i in number %}
           <button class="coreBtn">core{{loop.index}}</button>
           {% endfor %}
         </div>
       </div>
-    </div>
+      </div>
+      
+    <script type="text/javascript" src="chart.js"></script>
   </body>
 </html>
