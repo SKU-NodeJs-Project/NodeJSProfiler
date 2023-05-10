@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua&family=Song+Myung&display=swap');
+@import url('https://fonts.googleapis.com/css2? family= Jua & family= Song+Myung & display=swap');
+@import url('https://fonts.googleapis.com/css2? family= Jua & family= Song+Myung & display=swap');
+
+
+* {margin: 0; padding: 0;}
+#wrap {text-align: center; font-size: 30px; color:#fff;}
+#header {height: 540px; line-height: 140px; background:white;}
+#banner {height: 450px; line-height: 450px; background:white;}
+#contents {height: 950px;background:white; position: relative;}
+#footer {height: 220px; line-height: 220px; background:white;}
+#name {font-size: 250px;color: black; text-shadow: 2px 6px 2px gray;font-family: 'Jua', sans-serif; font-family: 'Song Myung', serif;}
+#upload {left: 2950px ; top:220px;font-size:50px; color: black;position: absolute;}
+#file_name{    box-sizing:border-box;
+
+               position: absolute;
+               left: 2700px;
+               top:300px;
+               width: 657px;
+               height: 86px;
+               right: 545px;
+               top: calc(50% - 46px/2 - 73px);
+
+               /* Colors/Base/00 */
+
+               background: #FFFFFF;
+               /* Colors/Primary/Slate/300 */
+
+               border: 1px solid #AFBACA;
+               box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+               border-radius: 6px;
+            }
+#circle{
+         box-sizing: border-box;
+
+         /* Auto layout */
+
+         display: flex;
+         flex-direction: row;
+         justify-content: center;
+         align-items: center;
+         padding: 18px;
+         gap: 10px;
+
+         position: absolute;
+         width: 86px;
+         height: 86px;
+         left: 3400px;
+         top: 381px;
+
+         /* Colors/Primary/Primary/25 */
+
+         background: #ffffff;
+         /* Colors/Primary/Primary/400 */
+
+         border: 1px solid #AFBACA;
+         /* Shadow / sm */
+
+         box-shadow: 0px 1px 2px rgba(45, 54, 67, 0.05);
+         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+         border-radius: 50px;
+
+         z-index: 1;
+
+         }
+#arrow {
+         z-index: 100;
+         position: absolute;
+         left: 3408px;
+         top: 390px;
+}
+#button1{
+           display: flex;
+           flex-direction: row;
+           justify-content: center;
+           align-items: center;
+           padding: 10px 20px;
+           gap: 10px;
+
+           position: absolute;
+           width: 280px;
+           height: 60px;
+           left: 2700px;
+           top: 526px;
+
+           background: rgba(15, 60, 217, 0.8);
+           box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+           border-radius: 6px;
+         }
+#button2{
+           display: flex;
+           flex-direction: row;
+           justify-content: center;
+           align-items: center;
+           padding: 10px 20px;
+           gap: 10px;
+
+           position: absolute;
+           width: 280px;
+           height: 60px;
+           left: 3100px;
+           top: 526px;
+         /* Colors/Primary/Slate/25 */
+
+         background: #F9FAFB;
+         /* Colors/Primary/Slate/200 */
+
+         border: 1px solid #D7DFE9;
+         /* Shadow / sm */
+
+         box-shadow: 0px 1px 2px rgba(45, 54, 67, 0.05);
+         border-radius: 6px;
+}
+.container {width: 1100px; height: inherit; margin: 0 auto; background: rgba(0,0,0,0,1);font-family: 'Jua', sans-serif;font-family: 'Song Myung', serif;
+            flex-direction: row;
+}
