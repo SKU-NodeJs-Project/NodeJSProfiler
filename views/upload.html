@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title></title>
-        <link href="upload.css" rel="stylesheet">
+        <link type="text/css" href="/upload.css" rel="stylesheet">
     </head>
     <body>
         <div id="wrap">
@@ -22,6 +22,10 @@
                         <div id="circle">
                             
                         </div>
+                        <form action="/chart" method="post" enctype="multipart/form-data">
+                            <input style="color: black;" type="file" id="txtFileInput" name="txtFile" accept=".txt" required>
+                            <button type="submit">파일 업로드하기</button>
+                          </form>
                         <div id="arrow"><img src=icon.png width="70px" height="70px"></div>
                         <div id="button1"><input type="button" value="업로드" style="border: none; background: transparent;font-size:30px;
                             font-family: 'Song Myung', serif;"></div>

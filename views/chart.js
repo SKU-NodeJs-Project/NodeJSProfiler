@@ -16,12 +16,23 @@ for (const option of options) {
     toggleButton.classList.add("selected");
     // nextButton.removeAttribute("disabled");
 
-    if (graphName) {
-      openGraph();
-      graphPrint.textContent = graphName;
-    }
+    // if (graphName) {
+    //   openGraph();
+    //   graphPrint.textContent = graphName;
+    // }
   });
 }
+// function redirectToGraph(index) {
+//   // const selectElement = document.getElementById('graph-select');
+//   // const graphType = selectElement.value;
+//   const graphType = 'bar';
+//   const fileName = document.getElementById('fileName').textContent;
+//   if (graphType) {
+//       location.href = `/chart/${index}/${graphType}/${fileName}`;
+//   } else {
+//       alert("그래프 종류를 선택해주세요.");
+//   }
+// }
 // 그래프 보여주는 로직
 
 function openGraph() {
