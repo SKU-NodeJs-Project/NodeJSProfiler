@@ -16,9 +16,10 @@ for (const option of options) {
     toggleButton.classList.add("selected");
     // nextButton.removeAttribute("disabled");
 
-    if (graphName) {
-      openGraph();
-      graphPrint.textContent = graphName;
+    if (graphName === "bar graph") {
+      openBarGraph();
+      // openGraph();
+      // graphPrint.textContent = graphName;
     }
   });
 }
@@ -26,6 +27,25 @@ for (const option of options) {
 
 function openGraph() {
   console.log("hi");
+}
+
+function openBarGraph() {
+  const config = {
+    type: "bar",
+    data: data,
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "top",
+        },
+        title: {
+          display: true,
+          text: "Chart.js Floating Bar Chart",
+        },
+      },
+    },
+  };
 }
 
 toggleButton.addEventListener("blur", function () {
