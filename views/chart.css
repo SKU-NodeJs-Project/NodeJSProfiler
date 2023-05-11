@@ -45,18 +45,17 @@ ul {
   position: relative;
 }
 
-.print {
-  /* background-color: red; */
-  height: 30rem;
-  width: inherit;
-}
-
 #form {
   height: 15rem;
   border-radius: 6px;
   background-color: #fff;
   display: block;
   /* background-color: coral; */
+}
+.print {
+  /* background-color: red; */
+  height: 30rem;
+  width: inherit;
 }
 
 .dropdown {
