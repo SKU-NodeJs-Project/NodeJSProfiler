@@ -17,6 +17,9 @@ nunjucks.configure("views", {
   watch: true,
 });
 
+//db 
+const maria  = require('./db/db');
+
 //router 세팅
 const uploadRouter = require("./routes/upload.js"); // router.get('/', (req, res) => { ... 을 불러옴
 const chartRouter = require("./routes/chart.js"); // router.get('/', (req, res) => { ... 을 불러옴
