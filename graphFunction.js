@@ -24,9 +24,18 @@ function min(arr) {
   return min;
 }
 
+function stdev(arr) {
+  const n = arr.length;
+  const m = arr.reduce((acc, val) => acc + val, 0) / n;
+  const v = arr.reduce((acc, val) => acc + (val - m) ** 2, 0) / (n - 1);
+  const s = Math.sqrt(v);
+  return parseInt(s);
+}
+
 //표준편차 연산
 
 module.exports = {
+  stdev,
   max,
   avg,
   min,

@@ -4,7 +4,7 @@ const router = express.Router();
 const multer = require('multer');
 const fs = require('fs');
 const mysqlConObj = require('../config/mysql');
-const { max, avg, min } = require('../graphFunction');
+const { stdev, max, avg, min } = require('../graphFunction');
 const url = require('url');
 const querystring = require('querystring');
 
@@ -161,6 +161,7 @@ router.get("/:index/:graph/:fileName", async (req, res, next) => { //DB에서 �
     let maxArr = [];
     let avgArr = [];
     let minArr = [];
+    let stdevArr = [];
     let subject = "";
     let xLabel = ""; //그래프 x축 레이블 이름
     if (num1 > 5) { //Task1~5 버튼 클릭 시 Task의 core별 그래프
@@ -177,11 +178,13 @@ router.get("/:index/:graph/:fileName", async (req, res, next) => { //DB에서 �
         maxArr.push(max(arr[i]));
         avgArr.push(avg(arr[i]));
         minArr.push(min(arr[i]));
+        stdevArr.push(stdev(arr[i]));
     }
     // console.log(Array.isArray(maxArr));
     console.log("maxArr : " + maxArr);
     console.log("avgArr : " + avgArr);
     console.log("minArr : " + minArr);
+    console.log("stdevArr : " + stdevArr);
 
     return res.render("chart", {
         title: ["작업단위", "코어단위"],
@@ -193,6 +196,7 @@ router.get("/:index/:graph/:fileName", async (req, res, next) => { //DB에서 �
         maxArr,
         avgArr,
         minArr,
+        stdevArr,
         display: true,
     });
 });
