@@ -44,13 +44,6 @@ ul {
   position: relative;
 }
 
-#form {
-  height: 15rem;
-  border-radius: 6px;
-  background-color: #fff;
-  display: block;
-  /* background-color: coral; */
-}
 .print {
   /* background-color: red; */
   height: 30rem;
@@ -58,6 +51,7 @@ ul {
 }
 
 .dropdown {
+  margin-top: 20px;
   position: relative;
   z-index: 1;
   width: inherit;
