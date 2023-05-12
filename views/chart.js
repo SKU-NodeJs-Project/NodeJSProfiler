@@ -16,13 +16,13 @@ for (const option of options) {
     toggleButton.classList.add("selected");
     // nextButton.removeAttribute("disabled");
 
-    if (graphName === "bar graph") {
-      openBarGraph();
-      // openGraph();
-      // graphPrint.textContent = graphName;
-    }
+    // if (graphName) {
+    //   openGraph();
+    //   graphPrint.textContent = graphName;
+    // }
   });
 }
+
 // 그래프 보여주는 로직
 
 function openGraph() {
