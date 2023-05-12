@@ -8,7 +8,7 @@ const mysqlConnection = {
             port: 30552,
             user: "root",
             password: "1234", 
-            database: "node" // MySQL Workbench에서 생성한 스키마 이름
+            database: "node" // 스키마 이름
         });
     },
     open: function(con) {
