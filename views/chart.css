@@ -65,6 +65,11 @@ h1, h2{
   display: block;
   /* background-color: coral; */
 }
+.print {
+  /* background-color: red; */
+  height: 30rem;
+  width: inherit;
+}
 
 .dropdown {
   margin-top: 20px;
