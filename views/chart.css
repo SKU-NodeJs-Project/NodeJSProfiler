@@ -44,7 +44,14 @@ ul {
   justify-content: center;
   position: relative;
 }
-
+canvas {
+  width: 550px;
+  height: 275px;
+  display: block;
+}
+h1, h2{
+  text-align: center;
+}
 .print {
   /* background-color: red; */
   height: 30rem;
@@ -58,8 +65,14 @@ ul {
   display: block;
   /* background-color: coral; */
 }
+.print {
+  /* background-color: red; */
+  height: 30rem;
+  width: inherit;
+}
 
 .dropdown {
+  margin-top: 20px;
   position: relative;
   z-index: 1;
   width: inherit;
