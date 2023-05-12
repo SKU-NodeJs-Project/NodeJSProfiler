@@ -15,14 +15,17 @@ const router = express.Router();
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
+const iconv = require('iconv-lite');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/"); // 업로드한 파일을 저장할 폴더 경로 지정
+    cb(null, "./uploads/"); // 업로드한 파일을 저장할 폴더 경로 지정
   },
   filename: function (req, file, cb) {
+    file.originalname = Buffer.from(file.originalname, "latin1").toString("utf8");
+    //  cb(null, file.originalname); //업로드한 파일명 그대로 저장 ? 파일이름깨짐
     const ext = path.extname(file.originalname);
-    cb(null, `${Date.now()}${ext}`); // 업로드한 파일명을 변경하여 저장
+    cb(null, `${file.originalname} + ${Date.now()}${ext}`); // 업로드한 파일명을 변경하여 저장
      },
 });
 
@@ -85,7 +88,7 @@ for (let i = 0; i < 5; i++) {
 }
 
 console.log(result);
-const pool = require('../db/db.js')
+const pool = require('../db/db.js');
 pool.getConnection()
   .then(conn => {
     for(let i = 0; i < 5; i++){
@@ -99,7 +102,18 @@ pool.getConnection()
     console.error(err);
   });
 
-
+  const calres = [];
+  const { stdev, max, avg, min } = require('../cal.js');
+  result.forEach(item => {
+    const tmp = [stdev(item.data),
+      max(item.data),
+      avg(item.data),
+      min(item.data)];
+    calres.push(tmp);
+  })
+  console.log('------------------------------------------');
+console.log(calres.length);
+console.log(calres);
 //
   res.redirect("/"); // 업로드 완료 후 메인 페이지로 리다이렉트
 });
