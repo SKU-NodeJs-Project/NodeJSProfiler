@@ -33,8 +33,7 @@ button {
   border: none;
   border-radius: 6px;
 
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
 
@@ -57,21 +56,20 @@ button {
   justify-self: center;
 }
 
+#upload {
+  width: 100%;
+  margin: 3rem 0;
+  font-size: 1.6rem;
+  text-align: center;
+  color: black;
+}
+
 #input_box {
   height: 8rem;
   width: inherit;
   display: flex;
-  justify-self: center;
-  align-items: center;
   flex-direction: row;
-}
-
-#upload {
-  width: 100%;
-  margin: 3rem 0 0.5rem 0;
-  font-size: 1.6rem;
-  text-align: center;
-  color: black;
+  background-color: aquamarine;
 }
 
 #button_box {

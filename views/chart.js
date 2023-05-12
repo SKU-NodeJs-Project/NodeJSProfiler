@@ -24,7 +24,6 @@ for (const option of options) {
 }
 
 // 그래프 보여주는 로직
-
 function openGraph() {
   console.log("hi");
 }

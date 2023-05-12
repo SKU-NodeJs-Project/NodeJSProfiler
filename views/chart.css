@@ -25,8 +25,7 @@ button {
   border: none;
   border-radius: 6px;
 
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
   cursor: pointer;
 
@@ -44,27 +43,7 @@ ul {
   justify-content: center;
   position: relative;
 }
-canvas {
-  width: 550px;
-  height: 275px;
-  display: block;
-}
-h1, h2{
-  text-align: center;
-}
-.print {
-  /* background-color: red; */
-  height: 30rem;
-  width: inherit;
-}
 
-#form {
-  height: 15rem;
-  border-radius: 6px;
-  background-color: #fff;
-  display: block;
-  /* background-color: coral; */
-}
 .print {
   /* background-color: red; */
   height: 30rem;
@@ -183,4 +162,54 @@ button.coreBtn {
 span {
   font-weight: bold;
   margin-right: 1rem;
+}
+
+#graph {
+  display: block;
+  border: 2px solid rgb(94, 94, 94);
+  border-radius: 4px;
+  background-color: #fcfcfc;
+  font-weight: 400;
+  color: rgb(124, 124, 124);
+  padding: 12px;
+  width: 30rem;
+  font-size: 1rem;
+  text-align: left;
+  cursor: pointer;
+  position: relative;
+  top: 24rem;
+}
+
+.select {
+  position: relative;
+}
+
+.select .option-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  max-height: 0;
+}
+
+.select.active .option-list {
+  max-height: none;
+}
+
+.select {
+  position: relative;
+}
+
+.select .option-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  max-height: 0;
+}
+
+.select.active .option-list {
+  max-height: none;
 }
