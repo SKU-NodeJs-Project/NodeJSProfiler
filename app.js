@@ -9,8 +9,8 @@ const path = require("path");
 
 app.set("port", process.env.PORT || 3000);
 app.set("view engine", "html");
-app.use(express.static("views"));
-
+// app.use(express.static("views"));
+app.use('/',express.static(__dirname +'/views'));
 nunjucks.configure("views", {
   autoescape: true,
   express: app,
