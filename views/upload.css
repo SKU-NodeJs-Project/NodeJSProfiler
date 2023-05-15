@@ -69,7 +69,6 @@ button {
   width: inherit;
   display: flex;
   flex-direction: row;
-  background-color: aquamarine;
 }
 
 #button_box {
