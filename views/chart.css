@@ -25,7 +25,8 @@ button {
   border: none;
   border-radius: 6px;
 
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
   cursor: pointer;
 
@@ -42,6 +43,14 @@ ul {
   width: 40rem;
   justify-content: center;
   position: relative;
+}
+
+#form {
+  height: 15rem;
+  border-radius: 6px;
+  background-color: #fff;
+  display: block;
+  /* background-color: coral; */
 }
 
 .print {
