@@ -1,26 +1,38 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <title></title>
-    <link href="upload.css" rel="stylesheet" />
-  </head>
-  <body>
-    <div id="center">
-      <div id="header">NODE.JS</div>
-      <div id="container">
-        <div id="upload">파일 업로드</div>
-        <div id="input_box">
-          <div class="file_name"></div>
-          <div class="circle">
-            <img class="arrowup_icon" src="./image/ArrowUpIcon.png" alt="icon" />
-          </div>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <link href="upload.css" rel="stylesheet">
+    </head>
+    <body>
+        <div id="wrap">
+            <div id="header">
+                <div class="container"></div>
+            </div>
+            <div id="banner">
+                <div class="container">
+                    <div id="name"><b>NODE.JS</b></div>
+                </div>
+            </div>
+            <div id="contents">
+                <div class="container">
+                        <div id="upload">파일 업로드</div>
+                        <div id="file_name"></div>
+                        <div id="circle">
+                            
+                        </div>
+                        <div id="arrow"><img src=icon.png width="70px" height="70px"></div>
+                        <div id="button1"><input type="button" value="업로드" style="border: none; background: transparent;font-size:30px;
+                            font-family: 'Song Myung', serif;"></div>
+                        <div id="button2"><input type="button" value="삭제" style="border: none; background: transparent;font-size:30px;
+                            font-family: 'Song Myung', serif;"></div>
+
+                </div>
+            </div> 
+            <div id="footer">
+                <div class="container"></div>
+            </div>
         </div>
-        <div id="button_box">
-          <button class="button1" value="업로드">업로드</button>
-          <button class="button2" value="삭제">삭제</button>
-        </div>
-      </div>
-    </div>
-  </body>
+    </body>
 </html>
