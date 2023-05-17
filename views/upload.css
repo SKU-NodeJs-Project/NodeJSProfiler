@@ -107,8 +107,8 @@ button {
   height: 2.5rem;
   width: 2rem;
   position: absolute;
-  top: 62.4%;
-  left: 58.5%;
+  top: 0.2rem; /* 0.2rem => 2px */
+  left: 0.45rem;
   z-index: 3;
 }
 
