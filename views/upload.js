@@ -31,10 +31,9 @@
 //   res.send("ok");
 // });
 
-//파일 업로드 이벤트 헨들러
+//업로드한 파일명 박스에 보여주는 로직
 const fileNamePrint = document.querySelector(".upload_name");
 const fileInput = document.getElementById("chooseFile");
-console.log(fileInput);
 
 fileInput.onchange = () => {
   const selectedFile = [...fileInput.files];

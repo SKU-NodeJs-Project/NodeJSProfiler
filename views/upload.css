@@ -155,15 +155,21 @@ button {
   appearance: none;
 }
 
-/* label 스타일 조정
-.button3 {
-  display: flex;
-  justify-content: center;
+.dropdown-toggle {
+  -webkit-animation: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  width: 100%;
+  height: 50px;
+  padding: 0 16px;
+  line-height: 50px;
+  color: rgba(133, 136, 150, 0.5);
+  text-align: left;
+  border: 1px solid rgba(224, 226, 231, 0.75);
+  border-radius: 6px;
+  /* transition: border-color 100ms ease-in; */
 }
-label {
-  cursor: pointer;
-  font-size: 1em;
-}*/
 
 /* 못생긴 기존 input 숨기기  */
 #chooseFile {
