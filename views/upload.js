@@ -32,12 +32,12 @@
 // });
 
 //파일 업로드 이벤트 헨들러
-const fileNamePrint = document.querySelector("a");
+const fileNamePrint = document.querySelector(".upload_name");
 const fileInput = document.getElementById("chooseFile");
 console.log(fileInput);
 
 fileInput.onchange = () => {
   const selectedFile = [...fileInput.files];
   const fileName = selectedFile[0].name;
-  fileNamePrint.textContent = fileName;
+  fileNamePrint.value = fileName;
 };

@@ -25,10 +25,9 @@ let multerUpload = multer({ storage: storage });
 
 router.post("/", multerUpload.single("txtFile"), async (req, res, next) => {
   let fileName = req.file.originalname;
-
   console.log(`파일 이름 확인용 : ${fileName}`);
+  
   let arr;
-
   try {
     let file_data = fs.readFileSync(
       __dirname + `/../uploads/${fileName}`,
