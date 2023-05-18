@@ -10,7 +10,7 @@
       <div id="header">NODE.JS</div>
       <div id="container">
         <div id="upload">파일 업로드</div>
-        <form method="post" enctype="'multipart/form-data'" action="chart.html">
+        <form method="post" name="txtFile" enctype="multipart/form-data" action="/chart">
           <div id="input_box">
             <input class="upload_name" value="파일을 선택해주세요" disabled="disabled" />
             <label class="a" for="chooseFile">
@@ -18,11 +18,10 @@
                 <img class="arrowup_icon" src="./image/ArrowUpIcon.png" alt="icon" />
               </div>
             </label>
-            <input type="file" id="chooseFile" name="chooseFile" accept="text/plain" />
+            <input type="file" id="chooseFile" name="txtFile" accept=".txt" />
           </div>
-          <!-- <button type="button" id="graph-select" class="dropdown-toggle">그래프를 선택해주세요</button> -->
           <div id="button_box">
-            <button class="button1" value="업로드">업로드</button>
+            <button class="button1" type="submit" value="업로드">업로드</button>
             <button class="button2" value="삭제">삭제</button>
           </div>
         </form>

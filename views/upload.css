@@ -175,3 +175,70 @@ button {
 #chooseFile {
   visibility: hidden;
 }
+
+.dropdown {
+  margin-top: 20px;
+  position: relative;
+  z-index: 1;
+  width: inherit;
+  margin-bottom: 8px;
+}
+
+.dropdown-toggle {
+  -webkit-animation: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  width: 100%;
+  height: 50px;
+  padding: 0 16px;
+  line-height: 50px;
+  color: rgba(133, 136, 150, 0.5);
+  text-align: left;
+  border: 1px solid rgba(224, 226, 231, 0.75);
+  border-radius: 6px;
+  /* transition: border-color 100ms ease-in; */
+}
+
+.dropdown-toggle.selected {
+  color: #3f4150;
+  /* border-color: rgba(224, 226, 231, 1); */
+}
+
+.dropdown-toggle:active {
+  border-color: rgba(224, 226, 231, 1);
+}
+
+.dropdown-menu {
+  max-height: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16.41px;
+  box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.15);
+  transition: max-height 500ms ease-in, box-shadow 500ms ease-in;
+}
+
+.dropdown-menu.show {
+  max-height: 280px;
+  box-shadow: 0 4px 9px 0 rgba(63, 65, 80, 0.1);
+}
+
+.dropdown-option {
+  width: 100%;
+  height: 44px;
+  padding: 0 16px;
+  line-height: 44px;
+  text-align: left;
+}
+
+.dropdown-option:hover {
+  background-color: #f8f9fa;
+}
+
+.output {
+  overflow: scroll;
+  margin: 1rem 0;
+  height: 200px;
+}

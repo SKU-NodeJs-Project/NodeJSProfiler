@@ -7,11 +7,13 @@ const mysqlConObj = require("../config/mysql");
 const { stdev, max, avg, min } = require("../graphFunction");
 const url = require("url");
 const querystring = require("querystring");
+const path = require("path");
 
+//storage변수에 multer 설정 후 upload에 선언
 let storage = multer.diskStorage({
   //# diskStorage => 파일이 저장될 경로와 파일명을 지정
   destination: function (req, file, cb) {
-    cb(null, "./uploads/"); // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
+    cb(null, path.resolve(__dirname, "../uploads")); // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname); // cb 콜백함수를 통해 전송된 파일 이름 설정
@@ -19,13 +21,14 @@ let storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
+//데이터 보내기
 router.post("/", upload.single("txtFile"), async (req, res, next) => {
   let fileName = req.file.originalname;
   console.log(`파일 이름 확인용 : ${fileName}`);
 
   let arr;
   try {
-    let file_data = fs.readFileSync(__dirname + `/../uploads/${fileName}`, "utf-8");
+    let file_data = fs.readFileSync(path.resolve(__dirname, `../uploads/${fileName}`), "utf-8");
 
     arr = file_data.split(/\s+/);
     // console.log("가공한 데이터가 배열에 어떻게 저장되었나 확인용");
@@ -43,6 +46,7 @@ router.post("/", upload.single("txtFile"), async (req, res, next) => {
     // console.log("최종 가공 확인용");
     // console.table(arr);
   } catch (error) {
+    console.log("hi");
     console.log(error);
   }
 
@@ -201,4 +205,5 @@ router.get("/:index/:graph/:fileName", async (req, res, next) => {
     display: true,
   });
 });
+
 module.exports = router;
