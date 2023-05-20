@@ -116,7 +116,18 @@ router.post("/", multerUpload.single("txtFile"), async (req, res, next) => {
     return res.redirect("/");
   }
 });
+router.get("/", (req, res, next) => { //기존 파일 불러오기
+  // URL 파싱
+  const parsedUrl = url.parse(req.url);
+  // 쿼리스트링 파싱
+  const query = querystring.parse(parsedUrl.query);
+  // 쿼리스트링 값에 접근
+  const fileName = query.tables; // /chart?tables="파일명"
 
+  return res.render("chart", {
+      fileName: fileName,
+  })
+});
 router.get("/:index/:graph/:fileName", async (req, res, next) => {
   //DB에서 데이터 조회 및 그래프 그리기
   const num1 = parseInt(req.params.index); // Task, Core 버튼 구분을 하기 위한 숫자

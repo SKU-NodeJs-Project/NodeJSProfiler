@@ -27,10 +27,39 @@
         </form>       
           <!-- <button class="button1" value="업로드">업로드</button> -->
           <button class="button2" value="삭제">삭제</button>
-         
         </div>
+        
+        <div class="historyDiv">
+          <h3>기존 파일 목록</h3>
+          <form action="/chart" method="get">
+            <div class="historyList">
+              <ul>
+                {% for table in showTable %}
+                <li>
+                  <input type="radio" id="{{ table }}" name="tables" value="{{ table }}" required>
+                  <label for="{{ table }}">{{ table }}</label>
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+            <button type="submit">불러오기</button>
+            <button type="button" onclick="dropTable(document.querySelector('input[name=\'tables\']:checked').value)">삭제</button>
+          </form>          
+        </div>
+
       </div>
     </div>
     <script type="text/javascript" src="app.js"></script>
+    <script>
+      function dropTable(value) {
+        const queryString = `tables=${value}`;
+        const isDrop = confirm(value+" 파일을 정말로 지우시겠습니까?");
+        if(isDrop){
+          location.href = `/?${queryString}`;
+        }
+      }
+    </script>
+
+    
   </body>
 </html>
