@@ -2,6 +2,9 @@
 const express = require("express");
 const mysqlConObj = require('../config/mysql');
 const router = express.Router();
+const fs = require("fs");
+const path = require("path");
+
 
 router.get("/", async(req, res, next) => {
   const { tables } = req.query;
@@ -13,6 +16,14 @@ router.get("/", async(req, res, next) => {
     await db.query(dropSql, (e, result) => {
       if (e) throw e;
       console.log(tables+" 삭제");
+    });
+    fs.unlink(path.resolve(__dirname, `../uploads/${tables}.txt`), (err) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+    
+      console.log('파일이 성공적으로 삭제되었습니다.');
     });
    }
   const showSql = "SHOW TABLES IN node"; // node -> mysql.js 파일에서 설정한 스키마 이름
