@@ -9,6 +9,23 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <title>{{fileName}} chart</title>
   <link type="text/css" rel="stylesheet" href="/chart.css" />
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
 </head>
 
 <body>
@@ -24,6 +41,39 @@
     <h1>{{fileName}}</h2>
       <h2 id="first">그래프 종류와 Task 또는 Core를 선택해주세요</h2>
       <h2 style="display: none;" id="second">{{subject}}{{index}}의 {{xLabel}}별 그래프</h2>
+
+
+
+<!-- 표 추가 -->
+<div id="table-container">
+  <table id="myTable">
+    <thead>
+      <tr>
+        <th>{{xLabel}}</th>
+        <th>MAX</th>
+        <th>AVG</th>
+        <th>MIN</th>
+        <th>STDEV</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in number %}
+        <tr>
+          <td>{{xLabel}} {{loop.index}}</td>
+          <td id="max{{loop.index}}">{{maxArr[loop.index-1]}}</td>
+          <td id="avg{{loop.index}}">{{avgArr[loop.index-1]}}</td>
+          <td id="min{{loop.index}}">{{minArr[loop.index-1]}}</td>
+          <td id="stdev{{loop.index}}">{{stdevArr[loop.index-1]}}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
       <canvas id="myChart"></canvas>
       <!--그래프 드롭박스-->
       <div id="form">
@@ -130,6 +180,7 @@
       }
     }
 
+    
   </script>
 </body>
 
