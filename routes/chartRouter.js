@@ -7,33 +7,28 @@ const mysqlConObj = require("../config/mysql");
 const { stdev, max, avg, min } = require("../graphFunction");
 const url = require("url");
 const querystring = require("querystring");
+const path = require("path");
 
-// router.get("/", (req, res) => {
-//   res.render("chart", { title: ["작업단위", "코어단위"] });
-// });
-
+//storage변수에 multer 설정 후 upload에 선언
 let storage = multer.diskStorage({
   //# diskStorage => 파일이 저장될 경로와 파일명을 지정
   destination: function (req, file, cb) {
-    cb(null, "./uploads/"); // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
+    cb(null, path.resolve(__dirname, "../uploads")); // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname); // cb 콜백함수를 통해 전송된 파일 이름 설정
   },
 });
-let multerUpload = multer({ storage: storage });
+const upload = multer({ storage: storage });
 
-router.post("/", multerUpload.single("txtFile"), async (req, res, next) => {
+//데이터 보내기
+router.post("/", upload.single("txtFile"), async (req, res, next) => {
   let fileName = req.file.originalname;
-
   console.log(`파일 이름 확인용 : ${fileName}`);
-  let arr;
 
+  let arr;
   try {
-    let file_data = fs.readFileSync(
-      __dirname + `/../uploads/${fileName}`,
-      "utf-8"
-    );
+    let file_data = fs.readFileSync(path.resolve(__dirname, `../uploads/${fileName}`), "utf-8");
 
     arr = file_data.split(/\s+/);
     // console.log("가공한 데이터가 배열에 어떻게 저장되었나 확인용");
@@ -51,6 +46,7 @@ router.post("/", multerUpload.single("txtFile"), async (req, res, next) => {
     // console.log("최종 가공 확인용");
     // console.table(arr);
   } catch (error) {
+    console.log("hi");
     console.log(error);
   }
 
@@ -86,17 +82,13 @@ router.post("/", multerUpload.single("txtFile"), async (req, res, next) => {
         } //"case1 case2 case3 case4 case5 case6 case7 case8 case9 case10"
         if (j == 0) {
           //각 행의 첫 열만 INSERT 나머지는 UPDATE => 각 Core의 Task1만 INSERT 나머지는 UPDATE
-          const insertSql = `INSERT INTO ${fileName2} (core, task${
-            j + 1
-          }) VALUES ('core${k + 1}', '${data}')`;
+          const insertSql = `INSERT INTO ${fileName2} (core, task${j + 1}) VALUES ('core${k + 1}', '${data}')`;
           await db.query(insertSql, (e) => {
             if (e) throw e;
             // console.log('데이터 삽입 완료');
           });
         } else {
-          const updateSql = `UPDATE ${fileName2} SET task${
-            j + 1
-          } = '${data}' WHERE core = 'core${k + 1}'`;
+          const updateSql = `UPDATE ${fileName2} SET task${j + 1} = '${data}' WHERE core = 'core${k + 1}'`;
           await db.query(updateSql, (e) => {
             if (e) throw e;
             // console.log('데이터 업데이트 완료');
@@ -107,7 +99,7 @@ router.post("/", multerUpload.single("txtFile"), async (req, res, next) => {
     }
     await mysqlConObj.close(db);
 
-    return res.render("chart.html", {
+    return res.render("chart", {
       title: ["작업단위", "코어단위"],
       fileName: fileName2,
     });
@@ -142,9 +134,7 @@ router.get("/:index/:graph/:fileName", async (req, res, next) => {
     //Task1~5 버튼 클릭 시
     num2 = num1 - 5;
     for (let i = 0; i < 5; i++) {
-      let selectSql = `SELECT task${num2} FROM ${fileName} WHERE core = 'core${
-        i + 1
-      }'`;
+      let selectSql = `SELECT task${num2} FROM ${fileName} WHERE core = 'core${i + 1}'`;
       await db.query(selectSql, (e, result) => {
         if (e) throw e;
         // console.log('데이터 조회 : ' + i + '번째');
@@ -167,9 +157,7 @@ router.get("/:index/:graph/:fileName", async (req, res, next) => {
     //Core1~5 버튼 클릭 시
     num2 = num1;
     for (let i = 0; i < 5; i++) {
-      let selectSql = `SELECT task${
-        i + 1
-      } FROM ${fileName} WHERE core = 'core${num2}'`;
+      let selectSql = `SELECT task${i + 1} FROM ${fileName} WHERE core = 'core${num2}'`;
       await db.query(selectSql, (e, result) => {
         if (e) throw e;
         // console.log('데이터 조회 : ' + i + '번째');
@@ -228,4 +216,5 @@ router.get("/:index/:graph/:fileName", async (req, res, next) => {
     display: true,
   });
 });
+
 module.exports = router;

@@ -10,25 +10,21 @@
       <div id="header">NODE.JS</div>
       <div id="container">
         <div id="upload">파일 업로드</div>
-        <div id="input_box">
-          <form method="post" enctype="'multipart/form-data'" action="chart.html">
-            <div class="button3">
-              <label for="chooseFile">
+        <form method="post" name="txtFile" enctype="multipart/form-data" action="/chart">
+          <div id="input_box">
+            <input class="upload_name" value="파일을 선택해주세요" disabled="disabled" />
+            <label class="a" for="chooseFile">
+              <div class="circle">
                 <img class="arrowup_icon" src="./image/ArrowUpIcon.png" alt="icon" />
-              </label>
-            </div>
-            <input type="file" id="chooseFile" name="chooseFile" accept="text/plain" onchange="loadFile(this)"">
-          
-          <div class="circle"></div>
-        </div>
-        <div id="button_box">
-          
-          <button class="button1" value="업로드" >업로드</button>  
-        </form>       
-          <!-- <button class="button1" value="업로드">업로드</button> -->
-          <button class="button2" value="삭제">삭제</button>
-        </div>
-        
+              </div>
+            </label>
+            <input type="file" id="chooseFile" name="txtFile" accept=".txt" />
+          </div>
+          <div id="button_box">
+            <button class="button1" type="submit" value="업로드">업로드</button>
+            <button class="button2" value="삭제">삭제</button>
+          </div>
+        </form>
         <div class="historyDiv">
           <h3>기존 파일 목록</h3>
           <form action="/chart" method="get">
@@ -46,10 +42,12 @@
             <button type="button" onclick="dropTable(document.querySelector('input[name=\'tables\']:checked').value)">삭제</button>
           </form>          
         </div>
-
+      </div>
       </div>
     </div>
-    <script type="text/javascript" src="app.js"></script>
+  
+    </div>
+    <script type="text/javascript" src="upload.js"></script>
     <script>
       function dropTable(value) {
         const queryString = `tables=${value}`;
@@ -59,7 +57,5 @@
         }
       }
     </script>
-
-    
   </body>
 </html>
