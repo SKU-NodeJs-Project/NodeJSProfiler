@@ -31,13 +31,12 @@
 //   res.send("ok");
 // });
 
-//파일 업로드 이벤트 헨들러
-const fileNamePrint = document.querySelector("a");
+//변수 선언
+const fileNamePrint = document.querySelector(".upload_name");
 const fileInput = document.getElementById("chooseFile");
-console.log(fileInput);
-
+// 업로드한 파일명 띄워주는 이벤트 헨들러
 fileInput.onchange = () => {
   const selectedFile = [...fileInput.files];
   const fileName = selectedFile[0].name;
-  fileNamePrint.textContent = fileName;
+  fileNamePrint.value = fileName;
 };
