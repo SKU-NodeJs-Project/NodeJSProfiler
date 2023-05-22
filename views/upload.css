@@ -7,6 +7,22 @@ body {
   font-family: "Song Myung", serif;
 }
 
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
 input {
   border: none;
   background: transparent;
@@ -185,19 +201,19 @@ button {
   margin: 0 auto;
 }
 
-.historyList ul{
+.historyList ul {
   height: 250px;
   list-style-type: none;
   padding-inline-start: 0px;
   text-align: left;
   font-size: 18px;
 }
-.historyDiv button{
+.historyDiv button {
   width: 7rem;
   margin: 25px;
 }
 
-.historyDiv{
+.historyDiv {
   width: 350px;
   height: 440px;
   text-align: center;
