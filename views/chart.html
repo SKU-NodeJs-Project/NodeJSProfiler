@@ -8,23 +8,6 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <title>{{fileName}} chart</title>
   <link type="text/css" rel="stylesheet" href="/chart.css" />
-  <style>
-    table {
-      border-collapse: collapse;
-      width: 100%;
-    }
-
-    th,
-    td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: left;
-    }
-
-    th {
-      background-color: #f2f2f2;
-    }
-  </style>
 </head>
 <body>
   <!--번호 배열-->
@@ -65,7 +48,6 @@
     </tbody>
   </table>
 </div>
-
       <canvas id="myChart"></canvas>
       <!--그래프 드롭박스-->
       <div id="form">
@@ -100,9 +82,8 @@
       </div>
   </div>
 
-  <script type="text/javascript" src="/chart.js"></script>
-  <script>
-
+  <script type="text/javascript" src="/chart.js" charset="utf-8"></script>
+  <script charset="utf-8">
     //그래프 띄워주는 로직
 var ctx = document.getElementById("myChart").getContext("2d");
 var first = document.getElementById("first");
@@ -170,5 +151,4 @@ function redirectToGraph(index) {
 }
   </script>
 </body>
-
 </html>

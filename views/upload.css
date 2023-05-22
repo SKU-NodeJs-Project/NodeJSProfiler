@@ -7,22 +7,6 @@ body {
   font-family: "Song Myung", serif;
 }
 
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-th,
-td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-}
-
-th {
-  background-color: #f2f2f2;
-}
-
 input {
   border: none;
   background: transparent;
@@ -59,7 +43,7 @@ button {
 
 #header {
   height: 5rem;
-  margin: 15rem 0 5rem 0;
+  margin: 5rem 0 5rem 0;
   justify-content: center;
   font-size: 5rem;
   font-weight: bold;
