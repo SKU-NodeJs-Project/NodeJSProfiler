@@ -52,7 +52,6 @@ router.post("/", upload.single("txtFile"), async (req, res, next) => {
     // console.log("최종 가공 확인용");
     // console.table(arr);
   } catch (error) {
-    console.log("hi");
     console.log(error);
   }
 
@@ -77,6 +76,7 @@ router.post("/", upload.single("txtFile"), async (req, res, next) => {
       if (e) throw e;
       console.log("테이블 생성 완료");
     });
+
     let data = "";
     for (let k = 0; k < 5; k++) {
       // Core 이동
@@ -91,9 +91,19 @@ router.post("/", upload.single("txtFile"), async (req, res, next) => {
           const insertSql = `INSERT INTO ${fileName2} (core, task${
             j + 1
           }) VALUES ('core${k + 1}', '${data}')`;
+
           await db.query(insertSql, (e) => {
-            if (e) throw e;
-            // console.log('데이터 삽입 완료');
+            try {
+              if (e) throw e;
+              // console.log("데이터 삽입 완료");
+            } catch (error) {
+              if (error.code === "ER_DATA_TOO_LONG") {
+                res.send(
+                  "<script>alert('올바르지 않은 데이터입니다. 메인페이지로 돌아가 다시 업로드 해주세요.');window.history.back();</script >"
+                );
+                return;
+              }
+            }
           });
         } else {
           const updateSql = `UPDATE ${fileName2} SET task${
