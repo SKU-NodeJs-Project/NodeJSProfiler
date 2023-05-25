@@ -17,8 +17,8 @@ let storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     file.originalname = Buffer.from(file.originalname, "latin1").toString(
-      "utf8"
-    ); //한글 깨짐 현상 처리
+      "utf8" //한글 깨짐 현상 처리
+    );
     cb(null, file.originalname); // cb 콜백함수를 통해 전송된 파일 이름 설정
   },
 });
@@ -93,17 +93,8 @@ router.post("/", upload.single("txtFile"), async (req, res, next) => {
           }) VALUES ('core${k + 1}', '${data}')`;
 
           await db.query(insertSql, (e) => {
-            try {
-              if (e) throw e;
-              // console.log("데이터 삽입 완료");
-            } catch (error) {
-              if (error.code === "ER_DATA_TOO_LONG") {
-                res.send(
-                  "<script>alert('올바르지 않은 데이터입니다. 메인페이지로 돌아가 다시 업로드 해주세요.');window.history.back();</script >"
-                );
-                return;
-              }
-            }
+            if (e) throw e;
+            // console.log("데이터 삽입 완료");
           });
         } else {
           const updateSql = `UPDATE ${fileName2} SET task${

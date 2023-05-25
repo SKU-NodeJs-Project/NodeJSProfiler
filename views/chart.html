@@ -12,13 +12,9 @@
 <body>
   <!--번호 배열-->
   {% set number = [1,2,3,4,5]%}
-  <!--그래프 종류 배열-->
-  <!-- {% set graph = ["bar graph","pie chart","line graph","table"]%} -->
-  {% set graph = ["bar","line"]%}
+  {% set graph = ["bar","line", "pie"]%}
 
   <div id="center">
-    <!-- <div class="print"> -->
-    <!-- </div> -->
     <h1>{{fileName}}</h1>
       <h2 id="first">그래프 종류와 Task 또는 Core를 선택해주세요</h2>
       <h2 style="display: none;" id="second">{{subject}}{{index}}의 {{xLabel}}별 그래프</h2>
@@ -84,7 +80,35 @@
 
   <script type="text/javascript" src="/chart.js" charset="utf-8"></script>
   <script charset="utf-8">
-    //그래프 띄워주는 로직
+//드롭박스 로직
+const graphPrint = document.querySelector(".print");
+const dropdown = document.querySelector(".dropdown");
+const toggleButton = document.querySelector(".dropdown-toggle");
+const menu = document.querySelector(".dropdown-menu");
+const options = document.querySelectorAll(".dropdown-option");
+const nextButton = document.querySelector(".next-button");
+
+//드롭박스 클릭시 애니메이션 로직
+toggleButton.addEventListener("click", function () {
+  menu.classList.toggle("show");
+});
+
+//드롭박스에 선택한 그래프명 출력 로직
+for (const option of options) {
+  option.addEventListener("click", function () {
+    const graphName = option.textContent.trim();
+    toggleButton.textContent = graphName;
+    toggleButton.classList.add("selected");
+  });
+}
+
+//드롭박스의 그래프 선택후 박스 닫는 애니메이션 로직
+toggleButton.addEventListener("blur", function () {
+  menu.classList.remove("show");
+});
+
+
+//그래프 띄워주는 로직
 var ctx = document.getElementById("myChart").getContext("2d");
 var first = document.getElementById("first");
 var second = document.getElementById("second");
