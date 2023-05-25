@@ -31,10 +31,7 @@ router.post("/", upload.single("txtFile"), async (req, res, next) => {
 
   let arr;
   try {
-    let file_data = fs.readFileSync(
-      path.resolve(__dirname, `../uploads/${fileName}`),
-      "utf-8"
-    );
+    let file_data = fs.readFileSync(path.resolve(__dirname, `../uploads/${fileName}`), "utf-8");
 
     arr = file_data.split(/\s+/);
     // console.log("가공한 데이터가 배열에 어떻게 저장되었나 확인용");
@@ -88,18 +85,14 @@ router.post("/", upload.single("txtFile"), async (req, res, next) => {
         } //"case1 case2 case3 case4 case5 case6 case7 case8 case9 case10"
         if (j == 0) {
           //각 행의 첫 열만 INSERT 나머지는 UPDATE => 각 Core의 Task1만 INSERT 나머지는 UPDATE
-          const insertSql = `INSERT INTO ${fileName2} (core, task${
-            j + 1
-          }) VALUES ('core${k + 1}', '${data}')`;
+          const insertSql = `INSERT INTO ${fileName2} (core, task${j + 1}) VALUES ('core${k + 1}', '${data}')`;
 
           await db.query(insertSql, (e) => {
             if (e) throw e;
             // console.log("데이터 삽입 완료");
           });
         } else {
-          const updateSql = `UPDATE ${fileName2} SET task${
-            j + 1
-          } = '${data}' WHERE core = 'core${k + 1}'`;
+          const updateSql = `UPDATE ${fileName2} SET task${j + 1} = '${data}' WHERE core = 'core${k + 1}'`;
           await db.query(updateSql, (e) => {
             if (e) throw e;
             // console.log('데이터 업데이트 완료');
@@ -136,6 +129,7 @@ router.get("/:index/:graph/:fileName", async (req, res, next) => {
   //DB에서 데이터 조회 및 그래프 그리기
   const num1 = parseInt(req.params.index); // Task, Core 버튼 구분을 하기 위한 숫자
   const graph = req.params.graph; // 그래프 종류
+  console.log("graph", graph);
   const fileName = req.params.fileName; // 파일명
   console.log("test : " + fileName);
   let arr = [[], [], [], [], []];
@@ -146,9 +140,7 @@ router.get("/:index/:graph/:fileName", async (req, res, next) => {
     //Task1~5 버튼 클릭 시
     num2 = num1 - 5;
     for (let i = 0; i < 5; i++) {
-      let selectSql = `SELECT task${num2} FROM ${fileName} WHERE core = 'core${
-        i + 1
-      }'`;
+      let selectSql = `SELECT task${num2} FROM ${fileName} WHERE core = 'core${i + 1}'`;
       await db.query(selectSql, (e, result) => {
         if (e) throw e;
         // console.log('데이터 조회 : ' + i + '번째');
@@ -171,9 +163,7 @@ router.get("/:index/:graph/:fileName", async (req, res, next) => {
     //Core1~5 버튼 클릭 시
     num2 = num1;
     for (let i = 0; i < 5; i++) {
-      let selectSql = `SELECT task${
-        i + 1
-      } FROM ${fileName} WHERE core = 'core${num2}'`;
+      let selectSql = `SELECT task${i + 1} FROM ${fileName} WHERE core = 'core${num2}'`;
       await db.query(selectSql, (e, result) => {
         if (e) throw e;
         // console.log('데이터 조회 : ' + i + '번째');

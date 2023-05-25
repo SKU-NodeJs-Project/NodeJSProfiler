@@ -12,10 +12,11 @@
 <body>
   <!--번호 배열-->
   {% set number = [1,2,3,4,5]%}
-  {% set graph = ["bar","line", "pie"]%}
+  {% set graph = ["bar","line", "doughnut"]%}
 
   <div id="center">
     <h1>{{fileName}}</h1>
+    <h1>{{graphType}}</h1>
       <h2 id="first">그래프 종류와 Task 또는 Core를 선택해주세요</h2>
       <h2 style="display: none;" id="second">{{subject}}{{index}}의 {{xLabel}}별 그래프</h2>
 
@@ -44,8 +45,20 @@
     </tbody>
   </table>
 </div>
-      <canvas id="myChart"></canvas>
-      <!--그래프 드롭박스-->
+  <div>  
+    <canvas class="barChart none" ></canvas>
+    <canvas class="lineChart none" ></canvas>
+
+    <div class="flex">
+      <canvas class="doughnutChart1 none" ></canvas>
+      <canvas class="doughnutChart2 none" ></canvas>
+    </div>div>
+    
+   
+  </div>
+  
+
+   
       <div id="form">
         <div class="dropdown">
           <button type="button" id="graph-select" class="dropdown-toggle">
@@ -78,8 +91,7 @@
       </div>
   </div>
 
-  <script type="text/javascript" src="/chart.js" charset="utf-8"></script>
-  <script charset="utf-8">
+<script charset="utf-8">
 //드롭박스 로직
 const graphPrint = document.querySelector(".print");
 const dropdown = document.querySelector(".dropdown");
@@ -109,14 +121,25 @@ toggleButton.addEventListener("blur", function () {
 
 
 //그래프 띄워주는 로직
-var ctx = document.getElementById("myChart").getContext("2d");
+// let ctx = document.getElementById("myChart").getContext('2d');
+let ctx = document.querySelector(`.barChart`).getContext('2d');
+let ctx1 = document.querySelector(`.lineChart`).getContext('2d');
+let ctx2 = document.querySelector(`.doughnutChart1`).getContext('2d');
+let ctx3 = document.querySelector(`.doughnutChart2`).getContext('2d');
 var first = document.getElementById("first");
 var second = document.getElementById("second");
+
+console.log(ctx,ctx1,"{{graphType}}")
+
 if ("{{display}}") {
   first.style.display = "none";
   second.style.display = "block";
-  var myChart = new Chart(ctx, {
-    type: "{{graphType}}",
+  console.log('hi');
+  
+  if("{{graphType}}" === "bar"){
+    document.querySelector(`.barChart`).classList.remove('none');
+    var myChart1 = new Chart(ctx, {
+    type: "bar",
     data: {
       labels: ["{{xLabel}}" + 1, "{{xLabel}}" + 2, "{{xLabel}}" + 3, "{{xLabel}}" + 4, "{{xLabel}}" + 5],
       datasets: [
@@ -158,6 +181,98 @@ if ("{{display}}") {
       scales: {},
     },
   });
+  }
+
+  if("{{graphType}}" === "line"){
+    document.querySelector(`.lineChart`).classList.remove('none');
+    var myChart2 = new Chart(ctx1, {
+    type: "line",
+    data: {
+      labels: ["{{xLabel}}" + 1, "{{xLabel}}" + 2, "{{xLabel}}" + 3, "{{xLabel}}" + 4, "{{xLabel}}" + 5],
+      datasets: [
+        {
+          label: "MAX",
+          data: "{{maxArr}}".split(","), //배열을 문자열로 받기 때문에 다시 ,을 기준으로 배열로 반환
+          fill: false,
+          backgroundColor: "rgb(75, 192, 192)",
+          borderColor: "rgb(75, 192, 192)",
+          tension: 0,
+        },
+        {
+          label: "AVG",
+          data: "{{avgArr}}".split(","),
+          fill: false,
+          backgroundColor: "rgb(255, 99, 132)",
+          borderColor: "rgb(255, 99, 132)",
+          tension: 0,
+        },
+        {
+          label: "MIN",
+          data: "{{minArr}}".split(","),
+          fill: false,
+          backgroundColor: "rgb(54, 162, 235)",
+          borderColor: "rgb(54, 162, 235)",
+          tension: 0,
+        },
+        {
+          label: "STDEV",
+          data: "{{stdevArr}}".split(","),
+          fill: false,
+          backgroundColor: "rgb(235, 162, 235)",
+          borderColor: "rgb(235, 162, 235)",
+          tension: 0,
+        },
+      ],
+    },
+    options: {
+      scales: {},
+    },
+  });
+  }
+
+  if("{{graphType}}" === "doughnut"){
+    document.querySelector(`.doughnutChart1`).classList.remove('none');
+  var myChart3 = new Chart(ctx2, {
+    type: "doughnut",
+    data: {
+      labels: ["MAX","AVG","MIN","STDEV"],
+      datasets: [
+      {
+          label: "data",
+          data: ["{{maxArr[0]}}".split(","), "{{avgArr[0]}}".split(","),"{{minArr[0]}}".split(","),"{{stdevArr[0]}}".split(",")], //배열을 문자열로 받기 때문에 다시 ,을 기준으로 배열로 반환
+          fill: false,
+          backgroundColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)"],
+          borderColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)",],
+          tension: 0,
+        },
+      ],
+    },
+    options: {
+      scales: {},
+    },
+  });
+  document.querySelector(`.doughnutChart2`).classList.remove('none');
+  var myeChart2 = new Chart(ctx3, {
+    type: "doughnut",
+    data: {
+      labels: ["MAX","AVG","MIN","STDEV"],
+      datasets: [
+      {
+          label: "data",
+          data: ["{{maxArr[1]}}".split(","), "{{avgArr[1]}}".split(","),"{{minArr[1]}}".split(","),"{{stdevArr[1]}}".split(",")], //배열을 문자열로 받기 때문에 다시 ,을 기준으로 배열로 반환
+          fill: false,
+          backgroundColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)"],
+          borderColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)",],
+          tension: 0,
+        },
+      ],
+    },
+    options: {
+      scales: {},
+    },
+  });
+  }
+
   const savedValue = localStorage.getItem("selectedGraph");
   if (savedValue) {
     document.getElementById("graph-select").textContent = savedValue;
