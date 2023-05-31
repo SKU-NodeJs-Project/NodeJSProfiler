@@ -52,6 +52,7 @@
     <div class="flex">
       <canvas class="doughnutChart1 none" ></canvas>
       <canvas class="doughnutChart2 none" ></canvas>
+      <canvas class="doughnutChart3 none" ></canvas>
     </div>div>
     
    
@@ -126,6 +127,7 @@ let ctx = document.querySelector(`.barChart`).getContext('2d');
 let ctx1 = document.querySelector(`.lineChart`).getContext('2d');
 let ctx2 = document.querySelector(`.doughnutChart1`).getContext('2d');
 let ctx3 = document.querySelector(`.doughnutChart2`).getContext('2d');
+let ctx4 = document.querySelector(`.doughnutChart3`).getContext('2d');
 var first = document.getElementById("first");
 var second = document.getElementById("second");
 
@@ -272,12 +274,33 @@ if ("{{display}}") {
     },
   });
   }
+  var myeChart3 = new Chart(ctx4, {
+    type: "doughnut",
+    data: {
+      labels: ["MAX","AVG","MIN","STDEV"],
+      datasets: [
+      {
+          label: "data",
+          data: ["{{maxArr[2]}}".split(","), "{{avgArr[2]}}".split(","),"{{minArr[2]}}".split(","),"{{stdevArr[2]}}".split(",")], //배열을 문자열로 받기 때문에 다시 ,을 기준으로 배열로 반환
+          fill: false,
+          backgroundColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)"],
+          borderColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)",],
+          tension: 0,
+        },
+      ],
+    },
+    options: {
+      scales: {},
+    },
+  });
+  }
+
 
   const savedValue = localStorage.getItem("selectedGraph");
   if (savedValue) {
     document.getElementById("graph-select").textContent = savedValue;
   }
-}
+
 function redirectToGraph(index) {
   const graphType = document.getElementById("graph-select").textContent.trim();
   // const graphType = 'line';
