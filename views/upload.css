@@ -43,7 +43,7 @@ button {
 
 #header {
   height: 5rem;
-  margin: 15rem 0 5rem 0;
+  margin: 5rem 0 5rem 0;
   justify-content: center;
   font-size: 5rem;
   font-weight: bold;
@@ -185,19 +185,19 @@ button {
   margin: 0 auto;
 }
 
-.historyList ul{
+.historyList ul {
   height: 250px;
   list-style-type: none;
   padding-inline-start: 0px;
   text-align: left;
   font-size: 18px;
 }
-.historyDiv button{
+.historyDiv button {
   width: 7rem;
   margin: 25px;
 }
 
-.historyDiv{
+.historyDiv {
   width: 350px;
   height: 440px;
   text-align: center;

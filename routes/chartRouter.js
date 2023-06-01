@@ -16,6 +16,9 @@ let storage = multer.diskStorage({
     cb(null, path.resolve(__dirname, "../uploads")); // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
   },
   filename: function (req, file, cb) {
+    file.originalname = Buffer.from(file.originalname, "latin1").toString(
+      "utf8" //한글 깨짐 현상 처리
+    );
     cb(null, file.originalname); // cb 콜백함수를 통해 전송된 파일 이름 설정
   },
 });
@@ -79,7 +82,6 @@ router.post("/", upload.single("txtFile"), async (req, res, next) => {
     console.log("최종 가공 확인용");
     console.table(arr);
   } catch (error) {
-    console.log("hi");
     console.log(error);
   }
  
@@ -113,6 +115,7 @@ router.post("/", upload.single("txtFile"), async (req, res, next) => {
       if (e) throw e;
       console.log("테이블 생성 완료");
     });
+
     let data = "";
     for (let k = 0; k < corecnt; k++) {
       // Core 이동
@@ -125,9 +128,10 @@ router.post("/", upload.single("txtFile"), async (req, res, next) => {
         if (j == 0) {
           //각 행의 첫 열만 INSERT 나머지는 UPDATE => 각 Core의 Task1만 INSERT 나머지는 UPDATE
           const insertSql = `INSERT INTO ${fileName2} (core, task${j + 1}) VALUES ('core${k + 1}', '${data}')`;
+
           await db.query(insertSql, (e) => {
             if (e) throw e;
-            // console.log('데이터 삽입 완료');
+            // console.log("데이터 삽입 완료");
           });
         } else {
           const updateSql = `UPDATE ${fileName2} SET task${j + 1} = '${data}' WHERE core = 'core${k + 1}'`;
@@ -150,7 +154,8 @@ router.post("/", upload.single("txtFile"), async (req, res, next) => {
     return res.redirect("/");
   }
 });
-router.get("/", (req, res, next) => { //기존 파일 불러오기
+router.get("/", (req, res, next) => {
+  //기존 파일 불러오기
   // URL 파싱
   const parsedUrl = url.parse(req.url);
   // 쿼리스트링 파싱
@@ -159,13 +164,14 @@ router.get("/", (req, res, next) => { //기존 파일 불러오기
   const fileName = query.tables; // /chart?tables="파일명"
 
   return res.render("chart", {
-      fileName: fileName,
-  })
+    fileName: fileName,
+  });
 });
 router.get("/:index/:graph/:fileName", async (req, res, next) => {
   //DB에서 데이터 조회 및 그래프 그리기
   const num1 = parseInt(req.params.index); // Task, Core 버튼 구분을 하기 위한 숫자
   const graph = req.params.graph; // 그래프 종류
+  console.log("graph", graph);
   const fileName = req.params.fileName; // 파일명
   console.log("test : " + fileName);
   let arr = [[], [], [], [], []];
