@@ -3,7 +3,7 @@
 <html lang="ko">
 
 <head>
-  <meta charset="utf-8"" />
+  <meta charset="utf-8"/>
   <meta http-equiv=" X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -56,42 +56,6 @@
       <canvas class="doughnutChart3 none" ></canvas>
     </div>
   </div>
-      <div id="form">
-        <div class="dropdown">
-          <button type="button" id="graph-select" class="dropdown-toggle">
-            그래프를 선택해주세요
-          </button>
-          <ul class="dropdown-menu">
-            {% for i in graph%}
-            <li class="dropdown-item">
-              <button type="button" value="{{loop.index}}" class="dropdown-option"
-                onclick="localStorage.setItem('selectedGraph', this.textContent)">
-                {{graph[loop.index0]}}
-              </button>
-            </li>
-            {%endfor%}
-            </li>
-          </ul>
-        </div>
-        <div id="btnContainer">
-          <span>{{title[0]}}</span>
-          {% for i in number %}
-          <button class="taskBtn" onclick="redirectToGraph('{{loop.index+5}}')">task{{loop.index}}</button>
-          {% endfor %}
-        </div>
-        <div id="btnContainer">
-          <span>{{title[1]}}</span>
-          {% for i in number %}
-          <button class="coreBtn" onclick="redirectToGraph('{{loop.index}}')">core{{loop.index}}</button>
-          {% endfor %}
-        </div>
-      </div>
-      <div class="flex">
-        <canvas class="doughnutChart1 none"></canvas>
-        <canvas class="doughnutChart2 none"></canvas>
-        <canvas class="doughnutChart3 none"></canvas>
-      </div>
-    </div>
     <div id="form">
       <div class="dropdown">
         <button type="button" id="graph-select" class="dropdown-toggle">

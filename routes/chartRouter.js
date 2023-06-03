@@ -58,7 +58,10 @@ router.post("/", upload.single("txtFile"), async (req, res, next) => {
       console.log("core1의 인덱스 번호 : " + k); // core1의 인덱스 번호
     }
     let j = 0;
-    while (arr[k] !== "task1" && arr.length===k) {
+    while (arr[k] !== "task1") {
+      if(arr.length===k){
+        break;
+      }
       if (arr[k] === `core${j + 1}`) {
         j++;
       }
@@ -80,7 +83,7 @@ router.post("/", upload.single("txtFile"), async (req, res, next) => {
     }
     
     casecnt = arr.length / datacnt;
-    if(arr.length % datacnt === 0 || isNaN(casecnt)){
+    if(arr.length % datacnt !== 0 || isNaN(casecnt) || taskcnt === 0 || casecnt === 0 || corecnt === 0){
       return res.status(400).render("upload.html", { alert: true });
     }
     console.log("케이스 개수 : " + casecnt);
