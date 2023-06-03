@@ -33,7 +33,7 @@
       </tr>
     </thead>
     <tbody>
-      {% for i in number %}
+      {% for i in range(labelNum) %}
         <tr>
           <td>{{xLabel}} {{loop.index}}</td>
           <td id="max{{loop.index}}">{{maxArr[loop.index-1]}}</td>
@@ -79,14 +79,14 @@
         </div>
         <div id="btnContainer">
           <span>{{title[0]}}</span>
-          {% for i in number %}
-          <button class="taskBtn" onclick="redirectToGraph('{{loop.index+5}}')">task{{loop.index}}</button>
+          {% for i in range(taskcnt) %}
+          <button class="taskBtn" onclick="redirectToGraph('{{loop.index}}','task')">task{{loop.index}}</button>
           {% endfor %}
         </div>
         <div id="btnContainer">
           <span>{{title[1]}}</span>
-          {% for i in number %}
-          <button class="coreBtn" onclick="redirectToGraph('{{loop.index}}')">core{{loop.index}}</button>
+          {% for i in range(corecnt) %}
+          <button class="coreBtn" onclick="redirectToGraph('{{loop.index}}','core')">core{{loop.index}}</button>
           {% endfor %}
         </div>
       </div>
@@ -139,11 +139,15 @@ if ("{{display}}") {
   console.log('hi');
   
   if("{{graphType}}" === "bar"){
+    let xLabels = [];
+    for (let i = 1; i <= '{{labelNum}}'; i++) {
+      xLabels.push('{{xLabel}}' + i);
+    }
     document.querySelector(`.barChart`).classList.remove('none');
     var myChart1 = new Chart(ctx, {
     type: "bar",
     data: {
-      labels: ["{{xLabel}}" + 1, "{{xLabel}}" + 2, "{{xLabel}}" + 3, "{{xLabel}}" + 4, "{{xLabel}}" + 5],
+      labels: xLabels,
       datasets: [
         {
           label: "MAX",
@@ -186,11 +190,15 @@ if ("{{display}}") {
   }
 
   if("{{graphType}}" === "line"){
+    let xLabels = [];
+    for (let i = 1; i <= '{{labelNum}}'; i++) {
+      xLabels.push('{{xLabel}}' + i);
+    }
     document.querySelector(`.lineChart`).classList.remove('none');
     var myChart2 = new Chart(ctx1, {
     type: "line",
     data: {
-      labels: ["{{xLabel}}" + 1, "{{xLabel}}" + 2, "{{xLabel}}" + 3, "{{xLabel}}" + 4, "{{xLabel}}" + 5],
+      labels: xLabels,
       datasets: [
         {
           label: "MAX",
@@ -301,12 +309,12 @@ if ("{{display}}") {
     document.getElementById("graph-select").textContent = savedValue;
   }
 
-function redirectToGraph(index) {
+function redirectToGraph(index, tc) {
   const graphType = document.getElementById("graph-select").textContent.trim();
   // const graphType = 'line';
   console.log("graphType: " + graphType);
   if (graphType != "그래프를 선택해주세요") {
-    location.href = `/chart/${index}/${graphType}/{{fileName}}/`;
+    location.href = `/chart/${tc}/${index}/${graphType}/{{fileName}}/{{casecnt}}/{{taskcnt}}/{{corecnt}}`;
   } else {
     alert("그래프 종류를 선택해주세요.");
   }
