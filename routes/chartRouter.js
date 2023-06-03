@@ -148,13 +148,16 @@ router.post("/", upload.single("txtFile"), async (req, res, next) => {
     return res.render("chart", {
       title: ["작업단위", "코어단위"],
       fileName: fileName2,
+      taskcnt: taskcnt,
+      corecnt: corecnt,
+      casecnt: casecnt,
     });
   } catch (error) {
     console.log(`DB 오류 있음 : ${error}`);
     return res.redirect("/");
   }
 });
-router.get("/", (req, res, next) => {
+router.get("/", async (req, res, next) => {
   //기존 파일 불러오기
   // URL 파싱
   const parsedUrl = url.parse(req.url);
@@ -162,27 +165,73 @@ router.get("/", (req, res, next) => {
   const query = querystring.parse(parsedUrl.query);
   // 쿼리스트링 값에 접근
   const fileName = query.tables; // /chart?tables="파일명"
+  const db = mysqlConObj.init();
+  await mysqlConObj.open(db);
+  let corecnt = 0;
+  let taskcnt = 0;
+  let casecnt = 0;
+
+  let coreSql = `SELECT COUNT(*) FROM ${fileName}`;
+  await db.query(coreSql, (e, result) => {
+    if (e) throw e;
+    console.log(result);
+    corecnt = Object.values(result[0])[0];
+    console.log("corecnt : ",corecnt);    
+  })
+  let taskSql = `SELECT COUNT(*) AS column_count FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'node' AND TABLE_NAME = '${fileName}'`;
+  await db.query(taskSql, (e, result) => {
+    if (e) throw e;
+    console.log(result);
+    taskcnt = Object.values(result[0])[0]-1; // core 칼럼이 하나 있기 때문에 -1
+    console.log("taskcnt : ",taskcnt);    
+  })
+  let caseSql =`SELECT task1 FROM ${fileName} WHERE core = 'core1'`;
+  await db.query(caseSql, (e, result) => {
+    if (e) throw e;
+    console.log(result);
+    const temp = Object.values(result[0])[0].split(" "); //문자열을 공백으로 파싱하여 배열로 저장
+    temp.pop();
+    console.log(temp);
+    casecnt = temp.length;
+    console.log("casecnt : ",casecnt);
+  })
+  await mysqlConObj.close(db);
 
   return res.render("chart", {
     fileName: fileName,
+    casecnt,
+    taskcnt,
+    corecnt,
   });
 });
-router.get("/:index/:graph/:fileName", async (req, res, next) => {
+router.get("/:tc/:index/:graph/:fileName/:casecnt/:taskcnt/:corecnt", async (req, res, next) => {
   //DB에서 데이터 조회 및 그래프 그리기
-  const num1 = parseInt(req.params.index); // Task, Core 버튼 구분을 하기 위한 숫자
+  const index = parseInt(req.params.index); // Task, Core 버튼 구분을 하기 위한 숫자
   const graph = req.params.graph; // 그래프 종류
   console.log("graph", graph);
   const fileName = req.params.fileName; // 파일명
   console.log("test : " + fileName);
-  let arr = [[], [], [], [], []];
-  let num2 = 0;
+  const casecnt = req.params.casecnt;
+  const taskcnt = req.params.taskcnt;
+  const corecnt = req.params.corecnt;
+  const tc = req.params.tc;
+
+  let arr = [];
+  if(tc=='task'){
+    for (let i = 0; i < corecnt; i++) {
+      arr.push([]);
+    }
+  }else if(tc=='core'){
+    for (let i = 0; i < taskcnt; i++) {
+      arr.push([]);
+    }
+  }
   const db = mysqlConObj.init();
   await mysqlConObj.open(db);
-  if (num1 > 5) {
+  if (tc == 'task') {
     //Task1~5 버튼 클릭 시
-    num2 = num1 - 5;
-    for (let i = 0; i < 5; i++) {
-      let selectSql = `SELECT task${num2} FROM ${fileName} WHERE core = 'core${i + 1}'`;
+    for (let i = 0; i < corecnt; i++) {
+      let selectSql = `SELECT task${index} FROM ${fileName} WHERE core = 'core${i + 1}'`;
       await db.query(selectSql, (e, result) => {
         if (e) throw e;
         // console.log('데이터 조회 : ' + i + '번째');
@@ -194,25 +243,24 @@ router.get("/:index/:graph/:fileName", async (req, res, next) => {
         // console.table(Object.values(result[0])[0]);
         const temp = Object.values(result[0])[0].split(" "); //문자열을 공백으로 파싱하여 배열로 저장
         temp.pop();
-        // console.log(temp);
-        for (let j = 0; j < 10; j++) {
+        console.log("temp : ",temp);
+        for (let j = 0; j < casecnt; j++) {
           arr[i].push(parseInt(temp[j])); //현재 데이터가 string이기 때문에 정수형으로 변환하여 배열 저장
         }
         // console.table(arr);
       });
     }
-  } else {
+  } else if(tc=='core'){
     //Core1~5 버튼 클릭 시
-    num2 = num1;
-    for (let i = 0; i < 5; i++) {
-      let selectSql = `SELECT task${i + 1} FROM ${fileName} WHERE core = 'core${num2}'`;
+    for (let i = 0; i < taskcnt; i++) {
+      let selectSql = `SELECT task${i + 1} FROM ${fileName} WHERE core = 'core${index}'`;
       await db.query(selectSql, (e, result) => {
         if (e) throw e;
         // console.log('데이터 조회 : ' + i + '번째');
         const temp = Object.values(result[0])[0].split(" "); //문자열을 공백으로 파싱하여 배열로 저장
         temp.pop();
         // console.log(temp);
-        for (let j = 0; j < 10; j++) {
+        for (let j = 0; j < casecnt; j++) {
           arr[i].push(parseInt(temp[j])); //현재 데이터가 string이기 때문에 정수형으로 변환하여 배열 저장
         }
         // console.table(arr);
@@ -227,23 +275,36 @@ router.get("/:index/:graph/:fileName", async (req, res, next) => {
   let stdevArr = [];
   let subject = "";
   let xLabel = ""; //그래프 x축 레이블 이름
-  if (num1 > 5) {
+  let labelNum = 0;
+  if (tc=='task') {
     //Task1~5 버튼 클릭 시 Task의 core별 그래프
     xLabel = "core";
     subject = "Task";
-  } else {
+    labelNum = corecnt;
+  } else if(tc == 'core'){
     //Core1~5 버튼 클릭 시 Core의 task별 그래프
     xLabel = "task";
     subject = "Core";
+    labelNum = taskcnt;
   }
-  console.log(subject + num2 + " arr");
+  console.log(subject + index + " arr");
   console.table(arr);
-  for (let i = 0; i < 5; i++) {
-    maxArr.push(max(arr[i]));
-    avgArr.push(avg(arr[i]));
-    minArr.push(min(arr[i]));
-    stdevArr.push(stdev(arr[i]));
+  if(tc=='task'){
+    for (let i = 0; i < corecnt; i++) {
+      maxArr.push(max(arr[i]));
+      avgArr.push(avg(arr[i]));
+      minArr.push(min(arr[i]));
+      stdevArr.push(stdev(arr[i]));
+    }
+  }else if(tc=='core'){
+    for (let i = 0; i < taskcnt; i++) {
+      maxArr.push(max(arr[i]));
+      avgArr.push(avg(arr[i]));
+      minArr.push(min(arr[i]));
+      stdevArr.push(stdev(arr[i]));
+    }
   }
+  
   // console.log(Array.isArray(maxArr));
   console.log("maxArr : " + maxArr);
   console.log("avgArr : " + avgArr);
@@ -254,7 +315,7 @@ router.get("/:index/:graph/:fileName", async (req, res, next) => {
     title: ["작업단위", "코어단위"],
     fileName: fileName,
     graphType: graph,
-    index: num2,
+    index,
     subject: subject,
     xLabel: xLabel,
     maxArr,
@@ -262,6 +323,10 @@ router.get("/:index/:graph/:fileName", async (req, res, next) => {
     minArr,
     stdevArr,
     display: true,
+    casecnt,
+    taskcnt,
+    corecnt,
+    labelNum,
   });
 });
 

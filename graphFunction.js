@@ -9,7 +9,7 @@ function max(arr) {
 function avg(arr) {
   let avg = 0;
   let sum = 0;
-  for (let i = 0; i < 10; i++){
+  for (let i = 0; i < arr.length; i++){
     sum += arr[i];
   }
   avg = sum / arr.length;
