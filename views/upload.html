@@ -40,7 +40,8 @@
             </div>
             <button type="submit">불러오기</button>
             <button type="button" onclick="dropTable(document.querySelector('input[name=\'tables\']:checked').value)">삭제</button>
-          </form>          
+          </form>         
+          {{alert}} 
         </div>
       </div>
       </div>
@@ -57,6 +58,11 @@
           .catch((e)=>{console.log(e)});
           //location.href = `/?${queryString}`;
         }
+      }
+
+      if("{{alert}}"){
+        alert("올바르지 않은 데이터 입니다.");
+        window.history.back();
       }
     </script>
   </body>
