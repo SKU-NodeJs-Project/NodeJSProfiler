@@ -16,7 +16,6 @@
 
   <div id="center">
     <h1>{{fileName}}</h1>
-    <h1>{{graphType}}</h1>
       <h2 id="first">그래프 종류와 Task 또는 Core를 선택해주세요</h2>
       <h2 style="display: none;" id="second">{{subject}}{{index}}의 {{xLabel}}별 그래프</h2>
 
@@ -53,13 +52,8 @@
       <canvas class="doughnutChart1 none" ></canvas>
       <canvas class="doughnutChart2 none" ></canvas>
       <canvas class="doughnutChart3 none" ></canvas>
-    </div>div>
-    
-   
+    </div>
   </div>
-  
-
-   
       <div id="form">
         <div class="dropdown">
           <button type="button" id="graph-select" class="dropdown-toggle">
@@ -136,7 +130,6 @@ console.log(ctx,ctx1,"{{graphType}}")
 if ("{{display}}") {
   first.style.display = "none";
   second.style.display = "block";
-  console.log('hi');
   
   if("{{graphType}}" === "bar"){
     document.querySelector(`.barChart`).classList.remove('none');
@@ -234,7 +227,7 @@ if ("{{display}}") {
 
   if("{{graphType}}" === "doughnut"){
     document.querySelector(`.doughnutChart1`).classList.remove('none');
-  var myChart3 = new Chart(ctx2, {
+    var myChart3 = new Chart(ctx2, {
     type: "doughnut",
     data: {
       labels: ["MAX","AVG","MIN","STDEV"],
@@ -253,13 +246,13 @@ if ("{{display}}") {
       scales: {},
     },
   });
-  document.querySelector(`.doughnutChart2`).classList.remove('none');
-  var myeChart2 = new Chart(ctx3, {
-    type: "doughnut",
-    data: {
-      labels: ["MAX","AVG","MIN","STDEV"],
-      datasets: [
-      {
+    document.querySelector(`.doughnutChart2`).classList.remove('none');
+    var myChart4 = new Chart(ctx3, {
+      type: "doughnut",
+      data: {
+        labels: ["MAX","AVG","MIN","STDEV"],
+        datasets: [
+        {
           label: "data",
           data: ["{{maxArr[1]}}".split(","), "{{avgArr[1]}}".split(","),"{{minArr[1]}}".split(","),"{{stdevArr[1]}}".split(",")], //배열을 문자열로 받기 때문에 다시 ,을 기준으로 배열로 반환
           fill: false,
@@ -273,7 +266,7 @@ if ("{{display}}") {
       scales: {},
     },
   });
-  }
+  document.querySelector(`.doughnutChart3`).classList.remove('none');
   var myeChart3 = new Chart(ctx4, {
     type: "doughnut",
     data: {
@@ -293,7 +286,7 @@ if ("{{display}}") {
       scales: {},
     },
   });
-  }
+  }}
 
 
   const savedValue = localStorage.getItem("selectedGraph");
