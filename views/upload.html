@@ -24,7 +24,6 @@
         </div>
         <div id="button_box">
           <button class="button1" type="submit" value="업로드">업로드</button>
-          <button class="button2" value="삭제">삭제</button>
         </div>
       </form>
       <div class="historyDiv">
@@ -72,6 +71,10 @@
     if ("{{alert}}") {
       alert("올바르지 않은 데이터 입니다.");
       window.history.back();
+    }
+
+    if("{{alert1}}") {
+      alert("파일을 선택해주세요.");
     }
   </script>
 </body>

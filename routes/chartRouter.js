@@ -44,7 +44,6 @@ router.post("/", upload.single("txtFile"), async (req, res, next) => {
     console.log("가공한 데이터가 배열에 어떻게 저장되었나 확인용");
     console.table(arr);
 
-  
     console.log(arr);
     let k = 0;
     while (arr[k] === `task${k + 1}`) {
@@ -59,7 +58,7 @@ router.post("/", upload.single("txtFile"), async (req, res, next) => {
     }
     let j = 0;
     while (arr[k] !== "task1") {
-      if(arr.length===k){
+      if (arr.length === k) {
         break;
       }
       if (arr[k] === `core${j + 1}`) {
@@ -81,16 +80,16 @@ router.post("/", upload.single("txtFile"), async (req, res, next) => {
         }
       }
     }
-    
+
     casecnt = arr.length / datacnt;
-    if(arr.length % datacnt !== 0 || isNaN(casecnt) || taskcnt === 0 || casecnt === 0 || corecnt === 0){
+    if (arr.length % datacnt !== 0 || isNaN(casecnt) || taskcnt === 0 || casecnt === 0 || corecnt === 0) {
       return res.status(400).render("upload.html", { alert: true });
     }
     console.log("케이스 개수 : " + casecnt);
     console.log("최종 가공 확인용");
     console.table(arr);
   } catch (error) {
-    console.log(error);    
+    console.log(error);
   }
 
   try {
@@ -181,16 +180,16 @@ router.get("/", async (req, res, next) => {
     if (e) throw e;
     console.log(result);
     corecnt = Object.values(result[0])[0];
-    console.log("corecnt : ",corecnt);    
-  })
+    console.log("corecnt : ", corecnt);
+  });
   let taskSql = `SELECT COUNT(*) AS column_count FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'node' AND TABLE_NAME = '${fileName}'`;
   await db.query(taskSql, (e, result) => {
     if (e) throw e;
     console.log(result);
-    taskcnt = Object.values(result[0])[0]-1; // core 칼럼이 하나 있기 때문에 -1
-    console.log("taskcnt : ",taskcnt);    
-  })
-  let caseSql =`SELECT task1 FROM ${fileName} WHERE core = 'core1'`;
+    taskcnt = Object.values(result[0])[0] - 1; // core 칼럼이 하나 있기 때문에 -1
+    console.log("taskcnt : ", taskcnt);
+  });
+  let caseSql = `SELECT task1 FROM ${fileName} WHERE core = 'core1'`;
   await db.query(caseSql, (e, result) => {
     if (e) throw e;
     console.log(result);
@@ -198,8 +197,8 @@ router.get("/", async (req, res, next) => {
     temp.pop();
     console.log(temp);
     casecnt = temp.length;
-    console.log("casecnt : ",casecnt);
-  })
+    console.log("casecnt : ", casecnt);
+  });
   await mysqlConObj.close(db);
 
   return res.render("chart", {
@@ -222,18 +221,18 @@ router.get("/:tc/:index/:graph/:fileName/:casecnt/:taskcnt/:corecnt", async (req
   const tc = req.params.tc;
 
   let arr = [];
-  if(tc=='task'){
+  if (tc == "task") {
     for (let i = 0; i < corecnt; i++) {
       arr.push([]);
     }
-  }else if(tc=='core'){
+  } else if (tc == "core") {
     for (let i = 0; i < taskcnt; i++) {
       arr.push([]);
     }
   }
   const db = mysqlConObj.init();
   await mysqlConObj.open(db);
-  if (tc == 'task') {
+  if (tc == "task") {
     //Task1~5 버튼 클릭 시
     for (let i = 0; i < corecnt; i++) {
       let selectSql = `SELECT task${index} FROM ${fileName} WHERE core = 'core${i + 1}'`;
@@ -248,14 +247,14 @@ router.get("/:tc/:index/:graph/:fileName/:casecnt/:taskcnt/:corecnt", async (req
         // console.table(Object.values(result[0])[0]);
         const temp = Object.values(result[0])[0].split(" "); //문자열을 공백으로 파싱하여 배열로 저장
         temp.pop();
-        console.log("temp : ",temp);
+        console.log("temp : ", temp);
         for (let j = 0; j < casecnt; j++) {
           arr[i].push(parseInt(temp[j])); //현재 데이터가 string이기 때문에 정수형으로 변환하여 배열 저장
         }
         // console.table(arr);
       });
     }
-  } else if(tc=='core'){
+  } else if (tc == "core") {
     //Core1~5 버튼 클릭 시
     for (let i = 0; i < taskcnt; i++) {
       let selectSql = `SELECT task${i + 1} FROM ${fileName} WHERE core = 'core${index}'`;
@@ -281,12 +280,12 @@ router.get("/:tc/:index/:graph/:fileName/:casecnt/:taskcnt/:corecnt", async (req
   let subject = "";
   let xLabel = ""; //그래프 x축 레이블 이름
   let labelNum = 0;
-  if (tc=='task') {
+  if (tc == "task") {
     //Task1~5 버튼 클릭 시 Task의 core별 그래프
     xLabel = "core";
     subject = "Task";
     labelNum = corecnt;
-  } else if(tc == 'core'){
+  } else if (tc == "core") {
     //Core1~5 버튼 클릭 시 Core의 task별 그래프
     xLabel = "task";
     subject = "Core";
@@ -294,14 +293,14 @@ router.get("/:tc/:index/:graph/:fileName/:casecnt/:taskcnt/:corecnt", async (req
   }
   console.log(subject + index + " arr");
   console.table(arr);
-  if(tc=='task'){
+  if (tc == "task") {
     for (let i = 0; i < corecnt; i++) {
       maxArr.push(max(arr[i]));
       avgArr.push(avg(arr[i]));
       minArr.push(min(arr[i]));
       stdevArr.push(stdev(arr[i]));
     }
-  }else if(tc=='core'){
+  } else if (tc == "core") {
     for (let i = 0; i < taskcnt; i++) {
       maxArr.push(max(arr[i]));
       avgArr.push(avg(arr[i]));
@@ -309,7 +308,7 @@ router.get("/:tc/:index/:graph/:fileName/:casecnt/:taskcnt/:corecnt", async (req
       stdevArr.push(stdev(arr[i]));
     }
   }
-  
+
   // console.log(Array.isArray(maxArr));
   console.log("maxArr : " + maxArr);
   console.log("avgArr : " + avgArr);
