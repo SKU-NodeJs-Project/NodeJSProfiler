@@ -18,9 +18,8 @@
 
   <div id="center">
     <h1>{{fileName}}</h1>
-    <h1>{{graphType}}</h1>
-    <h2 id="first">그래프 종류와 Task 또는 Core를 선택해주세요</h2>
-    <h2 style="display: none;" id="second">{{subject}}{{index}}의 {{xLabel}}별 그래프</h2>
+      <h2 id="first">그래프 종류와 Task 또는 Core를 선택해주세요</h2>
+      <h2 style="display: none;" id="second">{{subject}}{{index}}의 {{xLabel}}별 그래프</h2>
 
     <!-- 표 추가 -->
     <div id="table-container">
@@ -51,17 +50,48 @@
       <canvas class="barChart none"></canvas>
       <canvas class="lineChart none"></canvas>
 
+    <div class="flex">
+      <canvas class="doughnutChart1 none" ></canvas>
+      <canvas class="doughnutChart2 none" ></canvas>
+      <canvas class="doughnutChart3 none" ></canvas>
+    </div>
+  </div>
+      <div id="form">
+        <div class="dropdown">
+          <button type="button" id="graph-select" class="dropdown-toggle">
+            그래프를 선택해주세요
+          </button>
+          <ul class="dropdown-menu">
+            {% for i in graph%}
+            <li class="dropdown-item">
+              <button type="button" value="{{loop.index}}" class="dropdown-option"
+                onclick="localStorage.setItem('selectedGraph', this.textContent)">
+                {{graph[loop.index0]}}
+              </button>
+            </li>
+            {%endfor%}
+            </li>
+          </ul>
+        </div>
+        <div id="btnContainer">
+          <span>{{title[0]}}</span>
+          {% for i in number %}
+          <button class="taskBtn" onclick="redirectToGraph('{{loop.index+5}}')">task{{loop.index}}</button>
+          {% endfor %}
+        </div>
+        <div id="btnContainer">
+          <span>{{title[1]}}</span>
+          {% for i in number %}
+          <button class="coreBtn" onclick="redirectToGraph('{{loop.index}}')">core{{loop.index}}</button>
+          {% endfor %}
+        </div>
+      </div>
       <div class="flex">
         <canvas class="doughnutChart1 none"></canvas>
         <canvas class="doughnutChart2 none"></canvas>
         <canvas class="doughnutChart3 none"></canvas>
       </div>
-
-
     </div>
-
-
-
     <div id="form">
       <div class="dropdown">
         <button type="button" id="graph-select" class="dropdown-toggle">
@@ -138,7 +168,6 @@
   if ("{{display}}") {
     first.style.display = "none";
     second.style.display = "block";
-    console.log('hi');
 
     if ("{{graphType}}" === "bar") {
       let xLabels = [];
@@ -241,69 +270,68 @@
         },
       });
     }
-
-    if ("{{graphType}}" === "doughnut") {
-      document.querySelector(`.doughnutChart1`).classList.remove('none');
-      var myChart3 = new Chart(ctx2, {
-        type: "doughnut",
-        data: {
-          labels: ["MAX", "AVG", "MIN", "STDEV"],
-          datasets: [
-            {
-              label: "data",
-              data: ["{{maxArr[0]}}".split(","), "{{avgArr[0]}}".split(","), "{{minArr[0]}}".split(","), "{{stdevArr[0]}}".split(",")], //배열을 문자열로 받기 때문에 다시 ,을 기준으로 배열로 반환
-              fill: false,
-              backgroundColor: ["rgb(75, 192, 192)", "rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(235, 162, 235)"],
-              borderColor: ["rgb(75, 192, 192)", "rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(235, 162, 235)",],
-              tension: 0,
-            },
-          ],
+  if("{{graphType}}" === "doughnut"){
+    document.querySelector(`.doughnutChart1`).classList.remove('none');
+    var myChart3 = new Chart(ctx2, {
+    type: "doughnut",
+    data: {
+      labels: ["MAX","AVG","MIN","STDEV"],
+      datasets: [
+      {
+          label: "data",
+          data: ["{{maxArr[0]}}".split(","), "{{avgArr[0]}}".split(","),"{{minArr[0]}}".split(","),"{{stdevArr[0]}}".split(",")], //배열을 문자열로 받기 때문에 다시 ,을 기준으로 배열로 반환
+          fill: false,
+          backgroundColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)"],
+          borderColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)",],
+          tension: 0,
         },
-        options: {
-          scales: {},
+      ],
+    },
+    options: {
+      scales: {},
+    },
+  });
+  document.querySelector(`.doughnutChart2`).classList.remove('none');
+  var myeChart4 = new Chart(ctx3, {
+    type: "doughnut",
+    data: {
+      labels: ["MAX","AVG","MIN","STDEV"],
+      datasets: [
+      {
+          label: "data",
+          data: ["{{maxArr[1]}}".split(","), "{{avgArr[1]}}".split(","),"{{minArr[1]}}".split(","),"{{stdevArr[1]}}".split(",")], //배열을 문자열로 받기 때문에 다시 ,을 기준으로 배열로 반환
+          fill: false,
+          backgroundColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)"],
+          borderColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)",],
+          tension: 0,
         },
-      });
-      document.querySelector(`.doughnutChart2`).classList.remove('none');
-      var myeChart2 = new Chart(ctx3, {
-        type: "doughnut",
-        data: {
-          labels: ["MAX", "AVG", "MIN", "STDEV"],
-          datasets: [
-            {
-              label: "data",
-              data: ["{{maxArr[1]}}".split(","), "{{avgArr[1]}}".split(","), "{{minArr[1]}}".split(","), "{{stdevArr[1]}}".split(",")], //배열을 문자열로 받기 때문에 다시 ,을 기준으로 배열로 반환
-              fill: false,
-              backgroundColor: ["rgb(75, 192, 192)", "rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(235, 162, 235)"],
-              borderColor: ["rgb(75, 192, 192)", "rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(235, 162, 235)",],
-              tension: 0,
-            },
-          ],
+      ],
+    },
+    options: {
+      scales: {},
+    },
+  });
+  document.querySelector(`.doughnutChart2`).classList.remove('none');
+  var myeChart3 = new Chart(ctx4, {
+    type: "doughnut",
+    data: {
+      labels: ["MAX","AVG","MIN","STDEV"],
+      datasets: [
+      {
+          label: "data",
+          data: ["{{maxArr[2]}}".split(","), "{{avgArr[2]}}".split(","),"{{minArr[2]}}".split(","),"{{stdevArr[2]}}".split(",")], //배열을 문자열로 받기 때문에 다시 ,을 기준으로 배열로 반환
+          fill: false,
+          backgroundColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)"],
+          borderColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)",],
+          tension: 0,
         },
-        options: {
-          scales: {},
-        },
-      });
-    }
-    var myeChart3 = new Chart(ctx4, {
-      type: "doughnut",
-      data: {
-        labels: ["MAX", "AVG", "MIN", "STDEV"],
-        datasets: [
-          {
-            label: "data",
-            data: ["{{maxArr[2]}}".split(","), "{{avgArr[2]}}".split(","), "{{minArr[2]}}".split(","), "{{stdevArr[2]}}".split(",")], //배열을 문자열로 받기 때문에 다시 ,을 기준으로 배열로 반환
-            fill: false,
-            backgroundColor: ["rgb(75, 192, 192)", "rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(235, 162, 235)"],
-            borderColor: ["rgb(75, 192, 192)", "rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(235, 162, 235)",],
-            tension: 0,
-          },
-        ],
-      },
-      options: {
-        scales: {},
-      },
-    });
-  }
+      ],
+    },
+    options: {
+      scales: {},
+    },
+  });
+  }}
 
 
   const savedValue = localStorage.getItem("selectedGraph");

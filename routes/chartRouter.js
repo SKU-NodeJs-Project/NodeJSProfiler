@@ -29,36 +29,39 @@ router.post("/", upload.single("txtFile"), async (req, res, next) => {
   let fileName = req.file.originalname;
   console.log(`파일 이름 확인용 : ${fileName}`);
 
-  let casecnt
-  let datacnt
-  let corecnt
+  let casecnt;
+  let datacnt;
+  let corecnt;
   let taskcnt;
   let arr;
   try {
     let file_data = fs.readFileSync(path.resolve(__dirname, `../uploads/${fileName}`), "utf-8");
 
     arr = file_data.split(/\s+/);
-    
+
     arr.shift();
     arr.pop();
     console.log("가공한 데이터가 배열에 어떻게 저장되었나 확인용");
     console.table(arr);
-    let k= 0;
-    while(arr[k] === `task${k + 1}`){
+
+    if (arr.length == 0) {
+      return res.status(400).render("upload.html", { alert: true });
+    }
+    console.log(arr);
+    let k = 0;
+    while (arr[k] === `task${k + 1}`) {
       k++;
     }
-  
+
     console.log("task 개수 : " + k); //task 개수
     taskcnt = k;
-    if("core1" === arr[k]){
-      // console.log(arr[k]);  
-      console.log("core1의 인덱스 번호 : " +k); // core1의 인덱스 번호
+    if ("core1" === arr[k]) {
+      // console.log(arr[k]);
+      console.log("core1의 인덱스 번호 : " + k); // core1의 인덱스 번호
     }
-    let j= 0;
-    while(arr[k] !== 'task1'){
-      
-      if(arr[k] === `core${j + 1}`){
-        
+    let j = 0;
+    while (arr[k] !== "task1") {
+      if (arr[k] === `core${j + 1}`) {
         j++;
       }
       k++;
@@ -66,7 +69,7 @@ router.post("/", upload.single("txtFile"), async (req, res, next) => {
     console.log("core 개수 : " + j); // j가 core 개수
     corecnt = j;
     // console.log(arr[k]);
-    console.log("k+ 1이 1케이스 개수 :" + k);  //  k + 1이 1케이스 개수
+    console.log("k+ 1이 1케이스 개수 :" + k); //  k + 1이 1케이스 개수
     datacnt = k - j - taskcnt;
     console.log("데이터 개수 : " + datacnt);
 
@@ -84,9 +87,6 @@ router.post("/", upload.single("txtFile"), async (req, res, next) => {
   } catch (error) {
     console.log(error);
   }
- 
- 
-
 
   try {
     // 0. 데이터 가공하여 mysql 테이블에 바로 INSERT
@@ -105,12 +105,12 @@ router.post("/", upload.single("txtFile"), async (req, res, next) => {
       console.log(`테이블 ${fileName2} 삭제 완료`);
     });
 
-    let tmpstr = '';
-    for(let i = 0; i < taskcnt; i++){
+    let tmpstr = "";
+    for (let i = 0; i < taskcnt; i++) {
       tmpstr += `task${i + 1} varchar(255), `;
     }
 
-    const createSql = `CREATE TABLE ${fileName2} (core varchar(10),` + tmpstr + 'Primary key(core))';
+    const createSql = `CREATE TABLE ${fileName2} (core varchar(10),` + tmpstr + "Primary key(core))";
     await db.query(createSql, (e) => {
       if (e) throw e;
       console.log("테이블 생성 완료");
@@ -123,7 +123,7 @@ router.post("/", upload.single("txtFile"), async (req, res, next) => {
         // Task 이동
         for (let i = 0; i < casecnt; i++) {
           //Case 이동
-          data += arr[i + i * (datacnt-1) + j + k * taskcnt] + " "; //case 10개에 대한 각 Core의 하나의 Task에 대한 수행 능력을 문자열로 저장
+          data += arr[i + i * (datacnt - 1) + j + k * taskcnt] + " "; //case 10개에 대한 각 Core의 하나의 Task에 대한 수행 능력을 문자열로 저장
         } //"case1 case2 case3 case4 case5 case6 case7 case8 case9 case10"
         if (j == 0) {
           //각 행의 첫 열만 INSERT 나머지는 UPDATE => 각 Core의 Task1만 INSERT 나머지는 UPDATE
