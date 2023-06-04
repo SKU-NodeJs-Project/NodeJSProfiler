@@ -187,7 +187,32 @@ span {
   font-weight: bold;
   margin-right: 1rem;
 }
+.btn {
+  width: 150px;
+  height: 30px;
+  background: #fff;
+  border: 1px solid rgb(77,77,77);
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover {
+    background: rgb(77,77,77);
+    color: #fff;
+  }
 
+}
+
+#button {
+  display: none;
+}
+#btn{
+  position: absolute;
+  right: 10px;
+  top:30px;
+}
 #graph {
   display: block;
   border: 2px solid rgb(94, 94, 94);

@@ -6,6 +6,8 @@ const path = require("path");
 const uploadRouter = require("./routes/uploadRouter.js");
 const chartRouter = require("./routes/chartRouter.js");
 const bodyParser = require("body-parser");
+const fs=require("fs");
+
 
 // 넌적스 세팅
 app.set("port", process.env.PORT || 3000);
