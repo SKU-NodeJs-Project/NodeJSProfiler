@@ -61,11 +61,20 @@
       <canvas class="barChart none"></canvas>
       <canvas class="lineChart none"></canvas>
 
-    <div class="flex">
-      <canvas class="doughnutChart1 none" ></canvas>
-      <canvas class="doughnutChart2 none" ></canvas>
-      <canvas class="doughnutChart3 none" ></canvas>
+    <div class="block">
+      <div class="flex">
+        <div><canvas class="doughnutChart1 none"></canvas></div>
+        <div><canvas class="doughnutChart2 none"></canvas></div>
+        <div><canvas class="doughnutChart3 none"></canvas></div>
+      </div>
     </div>
+    <div class="block">
+      <div class="flex">
+        <div><canvas class="doughnutChart4 none"></canvas></div>
+        <div><canvas class="doughnutChart5 none"></canvas></div>
+      </div>
+    </div>
+      
   </div>
     <div id="form">
       <div class="dropdown">
@@ -135,6 +144,8 @@
   let ctx2 = document.querySelector(`.doughnutChart1`).getContext('2d');
   let ctx3 = document.querySelector(`.doughnutChart2`).getContext('2d');
   let ctx4 = document.querySelector(`.doughnutChart3`).getContext('2d');
+  let ctx5 = document.querySelector(`.doughnutChart4`).getContext('2d');
+  let ctx6 = document.querySelector(`.doughnutChart5`).getContext('2d');
   var first = document.getElementById("first");
   var second = document.getElementById("second");
 
@@ -286,7 +297,7 @@
       scales: {},
     },
   });
-  document.querySelector(`.doughnutChart2`).classList.remove('none');
+  document.querySelector(`.doughnutChart3`).classList.remove('none');
   var myeChart3 = new Chart(ctx4, {
     type: "doughnut",
     data: {
@@ -295,6 +306,46 @@
       {
           label: "data",
           data: ["{{maxArr[2]}}".split(","), "{{avgArr[2]}}".split(","),"{{minArr[2]}}".split(","),"{{stdevArr[2]}}".split(",")], //배열을 문자열로 받기 때문에 다시 ,을 기준으로 배열로 반환
+          fill: false,
+          backgroundColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)"],
+          borderColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)",],
+          tension: 0,
+        },
+      ],
+    },
+    options: {
+      scales: {},
+    },
+  });
+  document.querySelector(`.doughnutChart4`).classList.remove('none');
+  var myeChart5 = new Chart(ctx5, {
+    type: "doughnut",
+    data: {
+      labels: ["MAX","AVG","MIN","STDEV"],
+      datasets: [
+      {
+          label: "data",
+          data: ["{{maxArr[3]}}".split(","), "{{avgArr[3]}}".split(","),"{{minArr[3]}}".split(","),"{{stdevArr[3]}}".split(",")], //배열을 문자열로 받기 때문에 다시 ,을 기준으로 배열로 반환
+          fill: false,
+          backgroundColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)"],
+          borderColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)",],
+          tension: 0,
+        },
+      ],
+    },
+    options: {
+      scales: {},
+    },
+  });
+  document.querySelector(`.doughnutChart5`).classList.remove('none');
+  var myeChart6 = new Chart(ctx6, {
+    type: "doughnut",
+    data: {
+      labels: ["MAX","AVG","MIN","STDEV"],
+      datasets: [
+      {
+          label: "data",
+          data: ["{{maxArr[4]}}".split(","), "{{avgArr[4]}}".split(","),"{{minArr[4]}}".split(","),"{{stdevArr[4]}}".split(",")], //배열을 문자열로 받기 때문에 다시 ,을 기준으로 배열로 반환
           fill: false,
           backgroundColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)"],
           borderColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)",],
@@ -325,5 +376,4 @@
     }
   }
 </script>
-
 </html>
