@@ -191,7 +191,7 @@ span {
   width: 150px;
   height: 30px;
   background: #fff;
-  border: 1px solid rgb(77,77,77);
+  border: 1px solid rgb(77, 77, 77);
   border-radius: 10px;
   font-weight: 500;
   cursor: pointer;
@@ -199,19 +199,18 @@ span {
   align-items: center;
   justify-content: center;
   &:hover {
-    background: rgb(77,77,77);
+    background: rgb(77, 77, 77);
     color: #fff;
   }
-
 }
 
 #button {
   display: none;
 }
-#btn{
+#btn {
   position: absolute;
   right: 10px;
-  top:30px;
+  top: 30px;
 }
 #graph {
   display: block;
@@ -270,9 +269,12 @@ span {
 .flex {
   display: flex;
   width: 250px;
+  height: 300px;
 }
 
-/* .doughnutChart1 {
-  width: 200rem;
-  height: 200rem;
-} */
+.block {
+  left: -50px;
+  z-index: 90;
+  height: 300px;
+  width: 250px;
+}
