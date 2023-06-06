@@ -26,6 +26,10 @@ const upload = multer({ storage: storage });
 
 //데이터 보내기
 router.post("/", upload.single("txtFile"), async (req, res, next) => {
+    if (!req.file) {
+    // 파일이 선택되지 않은 경우
+    return res.render("upload.html", { alert1: true });
+  }
   let fileName = req.file.originalname;
   console.log(`파일 이름 확인용 : ${fileName}`);
 
