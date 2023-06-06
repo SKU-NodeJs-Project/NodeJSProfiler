@@ -60,20 +60,14 @@
     <div>
       <canvas class="barChart none"></canvas>
       <canvas class="lineChart none"></canvas>
-
-    <div class="block">
-      <div class="flex">
-        <div><canvas class="doughnutChart1 none"></canvas></div>
-        <div><canvas class="doughnutChart2 none"></canvas></div>
-        <div><canvas class="doughnutChart3 none"></canvas></div>
-      </div>
+    <div class="graphBox">
+    {% for i in range(labelNum)%}
+    <div>
+      <div>{{loop.index}}</div>
+      <canvas class="doughnutChart{{loop.index}}"></canvas>
     </div>
-    <div class="block">
-      <div class="flex">
-        <div><canvas class="doughnutChart4 none"></canvas></div>
-        <div><canvas class="doughnutChart5 none"></canvas></div>
-      </div>
-    </div>
+    {% endfor %}
+  </div>
       
   </div>
     <div id="form">
@@ -141,11 +135,12 @@
   // let ctx = document.getElementById("myChart").getContext('2d');
   let ctx = document.querySelector(`.barChart`).getContext('2d');
   let ctx1 = document.querySelector(`.lineChart`).getContext('2d');
-  let ctx2 = document.querySelector(`.doughnutChart1`).getContext('2d');
-  let ctx3 = document.querySelector(`.doughnutChart2`).getContext('2d');
-  let ctx4 = document.querySelector(`.doughnutChart3`).getContext('2d');
-  let ctx5 = document.querySelector(`.doughnutChart4`).getContext('2d');
-  let ctx6 = document.querySelector(`.doughnutChart5`).getContext('2d');
+  let ctx10 = document.querySelector(`doughnutChart{{loop.index}}`).getContext('2d');
+  // let ctx2 = document.querySelector(`.doughnutChart1`).getContext('2d');
+  // let ctx3 = document.querySelector(`.doughnutChart2`).getContext('2d');
+  // let ctx4 = document.querySelector(`.doughnutChart3`).getContext('2d');
+  // let ctx5 = document.querySelector(`.doughnutChart4`).getContext('2d');
+  // let ctx6 = document.querySelector(`.doughnutChart5`).getContext('2d');
   var first = document.getElementById("first");
   var second = document.getElementById("second");
 
@@ -257,26 +252,39 @@
       });
     }
   if("{{graphType}}" === "doughnut"){
-    document.querySelector(`.doughnutChart1`).classList.remove('none');
-    var myChart3 = new Chart(ctx2, {
-    type: "doughnut",
-    data: {
-      labels: ["MAX","AVG","MIN","STDEV"],
-      datasets: [
-      {
-          label: "data",
-          data: ["{{maxArr[0]}}".split(","), "{{avgArr[0]}}".split(","),"{{minArr[0]}}".split(","),"{{stdevArr[0]}}".split(",")], //배열을 문자열로 받기 때문에 다시 ,을 기준으로 배열로 반환
-          fill: false,
-          backgroundColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)"],
-          borderColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)",],
-          tension: 0,
-        },
-      ],
-    },
-    options: {
-      scales: {},
-    },
-  });
+    console.log('d');
+    let xLabels = [];
+      for (let i = 1; i <= '{{labelNum}}'; i++) {
+        xLabels.push('{{xLabel}}' + i);
+        console.log(xLabels);
+        document.querySelector(`.doughnutChart{{xLables[i]}}`).classList.remove('none');
+        var myChart3 = new Chart(ctx10, {
+        type: "doughnut",
+        data: {
+          labels: ["MAX","AVG","MIN","STDEV"],
+          datasets: [
+          {
+            label: "data",
+            data: ["{{maxArr[i]}}".split(","), "{{avgArr[i]}}".split(","),"{{minArr[i]}}".split(","),"{{stdevArr[i]}}".split(",")], //배열을 문자열로 받기 때문에 다시 ,을 기준으로 배열로 반환
+            fill: false,
+            backgroundColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)"],
+            borderColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)",],
+            tension: 0,
+          },
+        ],
+      },
+      options: {
+        scales: {},
+      },
+      });
+
+
+
+
+
+
+      }
+    
   document.querySelector(`.doughnutChart2`).classList.remove('none');
   var myeChart4 = new Chart(ctx3, {
     type: "doughnut",

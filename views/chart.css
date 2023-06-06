@@ -278,3 +278,11 @@ span {
   height: 300px;
   width: 250px;
 }
+
+.graphBox {
+  height: 500px;
+  width: 1000px;
+  background-color: yellow;
+  overflow: auto;
+  flex-wrap: wrap;
+}
