@@ -273,3 +273,9 @@ span {
 .none {
   display: none;
 }
+
+.doughnutName{
+  position: relative;
+  top: -42%;
+  left: 43%;
+}

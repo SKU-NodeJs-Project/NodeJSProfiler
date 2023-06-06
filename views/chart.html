@@ -64,6 +64,7 @@
         {% for i in range(labelNum) %}
         <div class="graphDetail">
           <canvas class="doughnutChart{{ i + 1 }}"></canvas>
+          <span class="doughnutName">{{xLabel}}{{i+1}}</span>
         </div>
         {% endfor %}
       </div>
