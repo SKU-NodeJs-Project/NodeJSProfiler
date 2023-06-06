@@ -5,6 +5,7 @@ const router = express.Router();
 const fs = require("fs");
 const path = require("path");
 
+
 router.get("/", async (req, res, next) => {
   const { tables } = req.query;
   const db = mysqlConObj.init();
@@ -42,5 +43,6 @@ router.get("/", async (req, res, next) => {
     showTable: showTable, //테이블 목록 배열
   });
 });
+
 
 module.exports = router;
