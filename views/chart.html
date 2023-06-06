@@ -3,7 +3,7 @@
 <html lang="ko">
 
 <head>
-  <meta charset="utf-8"/>
+  <meta charset="utf-8" />
   <meta http-equiv=" X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -22,15 +22,15 @@
       <label for="button">
         <div class="btn">이전</div>
       </label>
-      <input type="button" id="button" onclick='movepage()'/>
+      <input type="button" id="button" onclick='movepage()' />
       <script type="text/javascript">
-        function movepage(){
-          location.href="/";
+        function movepage() {
+          location.href = "/";
         }
       </script>
     </div>
-      <h2 id="first">그래프 종류와 Task 또는 Core를 선택해주세요</h2>
-      <h2 style="display: none;" id="second">{{subject}}{{index}}의 {{xLabel}}별 그래프</h2>
+    <h2 id="first">그래프 종류와 Task 또는 Core를 선택해주세요</h2>
+    <h2 style="display: none;" id="second">{{subject}}{{index}}의 {{xLabel}}별 그래프</h2>
 
     <!-- 표 추가 -->
     <div id="table-container">
@@ -60,16 +60,14 @@
     <div>
       <canvas class="barChart none"></canvas>
       <canvas class="lineChart none"></canvas>
-    <div class="graphBox">
-    {% for i in range(labelNum)%}
-    <div>
-      <div>{{loop.index}}</div>
-      <canvas class="doughnutChart{{loop.index}}"></canvas>
+      <div class="graphBox none">
+        {% for i in range(labelNum) %}
+        <div class="graphDetail">
+          <canvas class="doughnutChart{{ i + 1 }}"></canvas>
+        </div>
+        {% endfor %}
+      </div>
     </div>
-    {% endfor %}
-  </div>
-      
-  </div>
     <div id="form">
       <div class="dropdown">
         <button type="button" id="graph-select" class="dropdown-toggle">
@@ -132,17 +130,10 @@
 
 
   //그래프 띄워주는 로직
-  // let ctx = document.getElementById("myChart").getContext('2d');
   let ctx = document.querySelector(`.barChart`).getContext('2d');
   let ctx1 = document.querySelector(`.lineChart`).getContext('2d');
-  let ctx10 = document.querySelector(`doughnutChart{{loop.index}}`).getContext('2d');
-  // let ctx2 = document.querySelector(`.doughnutChart1`).getContext('2d');
-  // let ctx3 = document.querySelector(`.doughnutChart2`).getContext('2d');
-  // let ctx4 = document.querySelector(`.doughnutChart3`).getContext('2d');
-  // let ctx5 = document.querySelector(`.doughnutChart4`).getContext('2d');
-  // let ctx6 = document.querySelector(`.doughnutChart5`).getContext('2d');
-  var first = document.getElementById("first");
-  var second = document.getElementById("second");
+  let first = document.getElementById("first");
+  let second = document.getElementById("second");
 
   console.log(ctx, ctx1, "{{graphType}}")
 
@@ -251,122 +242,49 @@
         },
       });
     }
-  if("{{graphType}}" === "doughnut"){
-    console.log('d');
-    let xLabels = [];
+    if ("{{graphType}}" === "doughnut") {
+      document.querySelector(`.graphBox`).classList.remove('none');
       for (let i = 1; i <= '{{labelNum}}'; i++) {
-        xLabels.push('{{xLabel}}' + i);
-        console.log(xLabels);
-        document.querySelector(`.doughnutChart{{xLables[i]}}`).classList.remove('none');
-        var myChart3 = new Chart(ctx10, {
-        type: "doughnut",
-        data: {
-          labels: ["MAX","AVG","MIN","STDEV"],
-          datasets: [
-          {
-            label: "data",
-            data: ["{{maxArr[i]}}".split(","), "{{avgArr[i]}}".split(","),"{{minArr[i]}}".split(","),"{{stdevArr[i]}}".split(",")], //배열을 문자열로 받기 때문에 다시 ,을 기준으로 배열로 반환
-            fill: false,
-            backgroundColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)"],
-            borderColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)",],
-            tension: 0,
+        var ctx2 = document.querySelector(`.doughnutChart${i}`).getContext('2d');
+        var myChart = new Chart(ctx2, {
+          type: "doughnut",
+          outlabels: "core",
+          data: {
+            labels: ["MAX", "AVG", "MIN", "STDEV"],
+            datasets: [
+              {
+                label: "data",
+                data: [
+                  `{{maxArr}}`.split(",")[i - 1],
+                  `{{avgArr}}`.split(",")[i - 1],
+                  `{{minArr}}`.split(",")[i - 1],
+                  `{{stdevArr}}`.split(",")[i - 1],
+                ],
+                fill: false,
+                backgroundColor: [
+                  "rgb(75, 192, 192)",
+                  "rgb(255, 99, 132)",
+                  "rgb(54, 162, 235)",
+                  "rgb(235, 162, 235)"
+                ],
+                borderColor: [
+                  "rgb(75, 192, 192)",
+                  "rgb(255, 99, 132)",
+                  "rgb(54, 162, 235)",
+                  "rgb(235, 162, 235)"
+                ],
+                tension: 0
+              }
+            ]
           },
-        ],
-      },
-      options: {
-        scales: {},
-      },
-      });
-
-
-
-
-
-
+          options: {
+            scales: {}
+          }
+        });
       }
-    
-  document.querySelector(`.doughnutChart2`).classList.remove('none');
-  var myeChart4 = new Chart(ctx3, {
-    type: "doughnut",
-    data: {
-      labels: ["MAX","AVG","MIN","STDEV"],
-      datasets: [
-      {
-          label: "data",
-          data: ["{{maxArr[1]}}".split(","), "{{avgArr[1]}}".split(","),"{{minArr[1]}}".split(","),"{{stdevArr[1]}}".split(",")], //배열을 문자열로 받기 때문에 다시 ,을 기준으로 배열로 반환
-          fill: false,
-          backgroundColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)"],
-          borderColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)",],
-          tension: 0,
-        },
-      ],
-    },
-    options: {
-      scales: {},
-    },
-  });
-  document.querySelector(`.doughnutChart3`).classList.remove('none');
-  var myeChart3 = new Chart(ctx4, {
-    type: "doughnut",
-    data: {
-      labels: ["MAX","AVG","MIN","STDEV"],
-      datasets: [
-      {
-          label: "data",
-          data: ["{{maxArr[2]}}".split(","), "{{avgArr[2]}}".split(","),"{{minArr[2]}}".split(","),"{{stdevArr[2]}}".split(",")], //배열을 문자열로 받기 때문에 다시 ,을 기준으로 배열로 반환
-          fill: false,
-          backgroundColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)"],
-          borderColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)",],
-          tension: 0,
-        },
-      ],
-    },
-    options: {
-      scales: {},
-    },
-  });
-  document.querySelector(`.doughnutChart4`).classList.remove('none');
-  var myeChart5 = new Chart(ctx5, {
-    type: "doughnut",
-    data: {
-      labels: ["MAX","AVG","MIN","STDEV"],
-      datasets: [
-      {
-          label: "data",
-          data: ["{{maxArr[3]}}".split(","), "{{avgArr[3]}}".split(","),"{{minArr[3]}}".split(","),"{{stdevArr[3]}}".split(",")], //배열을 문자열로 받기 때문에 다시 ,을 기준으로 배열로 반환
-          fill: false,
-          backgroundColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)"],
-          borderColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)",],
-          tension: 0,
-        },
-      ],
-    },
-    options: {
-      scales: {},
-    },
-  });
-  document.querySelector(`.doughnutChart5`).classList.remove('none');
-  var myeChart6 = new Chart(ctx6, {
-    type: "doughnut",
-    data: {
-      labels: ["MAX","AVG","MIN","STDEV"],
-      datasets: [
-      {
-          label: "data",
-          data: ["{{maxArr[4]}}".split(","), "{{avgArr[4]}}".split(","),"{{minArr[4]}}".split(","),"{{stdevArr[4]}}".split(",")], //배열을 문자열로 받기 때문에 다시 ,을 기준으로 배열로 반환
-          fill: false,
-          backgroundColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)"],
-          borderColor: ["rgb(75, 192, 192)","rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(235, 162, 235)",],
-          tension: 0,
-        },
-      ],
-    },
-    options: {
-      scales: {},
-    },
-  });
-  }}
 
+    }
+  }
 
   const savedValue = localStorage.getItem("selectedGraph");
   if (savedValue) {
