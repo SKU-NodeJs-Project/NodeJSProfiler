@@ -28,7 +28,7 @@ app.use((req, res, next) => {
   res.status(404).send("Not Found");
 });
 
-app.listen(app.get("port"), hostname, () => {
+app.listen(app.get("port"), () => {
   console.log(`서버 링크 : http://${hostname}:${app.get("port")}/`);
 });
 
