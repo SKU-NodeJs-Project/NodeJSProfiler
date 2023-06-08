@@ -28,8 +28,9 @@ app.use((req, res, next) => {
   res.status(404).send("Not Found");
 });
 
-app.listen(app.get("port"), hostname, () => {
-  console.log(`서버 링크 : http://${hostname}:${app.get("port")}/`);
+app.listen(app.get("port"), () => {
+  // console.log(`서버 링크 : http://${hostname}:${app.get("port")}/`);
+  console.log("서버 구동 성공");
 });
 
 //한글 깨짐 현상
