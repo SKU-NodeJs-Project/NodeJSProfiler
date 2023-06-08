@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const hostname = "localhost";
+const hostname = "https://port-0-nodejsprofiler-f69b2mlh7uc2t5.sel4.cloudtype.app/";
 const nunjucks = require("nunjucks");
 const path = require("path");
 const uploadRouter = require("./routes/uploadRouter.js");
