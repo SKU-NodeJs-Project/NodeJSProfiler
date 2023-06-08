@@ -129,7 +129,6 @@
     menu.classList.remove("show");
   });
 
-
   //그래프 띄워주는 로직
   let ctx = document.querySelector(`.barChart`).getContext('2d');
   let ctx1 = document.querySelector(`.lineChart`).getContext('2d');
@@ -294,7 +293,6 @@
 
   function redirectToGraph(index, tc) {
     const graphType = document.getElementById("graph-select").textContent.trim();
-    // const graphType = 'line';
     console.log("graphType: " + graphType);
     if (graphType != "그래프를 선택해주세요") {
       location.href = `/chart/${tc}/${index}/${graphType}/{{fileName}}/{{casecnt}}/{{taskcnt}}/{{corecnt}}`;

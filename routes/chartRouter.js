@@ -26,7 +26,7 @@ const upload = multer({ storage: storage });
 
 //데이터 보내기
 router.post("/", upload.single("txtFile"), async (req, res, next) => {
-    if (!req.file) {
+  if (!req.file) {
     // 파일이 선택되지 않은 경우
     return res.render("upload.html", { alert1: true });
   }
@@ -103,8 +103,6 @@ router.post("/", upload.single("txtFile"), async (req, res, next) => {
     // 3. INSERT
 
     const fileName2 = fileName.split(".txt")[0]; //파일 이름에서 .txt 확장자 제거
-    // console.log(`.txt 확장자 제거 확인용 ${fileName2}`);
-
     const db = mysqlConObj.init();
     await mysqlConObj.open(db);
     const dropSql = `DROP TABLE IF EXISTS ${fileName2}`; // IF EXISTS를 통해 해당 이름을 가진 테이블이 없어도 오류X
@@ -242,20 +240,12 @@ router.get("/:tc/:index/:graph/:fileName/:casecnt/:taskcnt/:corecnt", async (req
       let selectSql = `SELECT task${index} FROM ${fileName} WHERE core = 'core${i + 1}'`;
       await db.query(selectSql, (e, result) => {
         if (e) throw e;
-        // console.log('데이터 조회 : ' + i + '번째');
-        // console.log("result");
-        // console.table(result);
-        // console.log("result[0]");
-        // console.table(result[0]);
-        // console.log("Object.values(result[0])[0]");
-        // console.table(Object.values(result[0])[0]);
         const temp = Object.values(result[0])[0].split(" "); //문자열을 공백으로 파싱하여 배열로 저장
         temp.pop();
         console.log("temp : ", temp);
         for (let j = 0; j < casecnt; j++) {
           arr[i].push(parseInt(temp[j])); //현재 데이터가 string이기 때문에 정수형으로 변환하여 배열 저장
         }
-        // console.table(arr);
       });
     }
   } else if (tc == "core") {

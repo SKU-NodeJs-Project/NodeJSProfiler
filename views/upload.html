@@ -65,12 +65,11 @@
         fetch(`/?${queryString}`)
           .then(() => { location.href = '/'; })//새로고침
           .catch((e) => { console.log(e) });
-        //location.href = `/?${queryString}`;
       }
     }
     if ("{{alert}}") {
       alert("올바르지 않은 데이터 입니다.");
-      window.history.back();
+      window.location.href = "/";
     }
 
     if("{{alert1}}") {
