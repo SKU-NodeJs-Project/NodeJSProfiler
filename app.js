@@ -10,7 +10,7 @@ const bodyParser = require("body-parser");
 
 
 // 넌적스 세팅
-app.set("port", 3000);
+app.set("port", 3001);
 app.set("view engine", "html");
 app.use("/", express.static(__dirname + "/views"));
 nunjucks.configure("views", {
