@@ -8,7 +8,7 @@
     "nunjucks": "^3.2.4"
   },
   "scripts": {
-    "start": "node src",
+    "start": "node app",
     "start:dev": "nodemon --watch src/ src/index.js"
   },
   "devDependencies": {

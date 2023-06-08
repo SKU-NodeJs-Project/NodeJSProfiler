@@ -262,19 +262,20 @@ span {
   max-height: none;
 }
 
+.graphBox {
+  height: 500px;
+  width: inherit;
+  display: flex;
+  flex-wrap: wrap;
+  overflow: auto;
+}
+
 .none {
   display: none;
 }
 
-.flex {
-  display: flex;
-  width: 250px;
-  height: 300px;
-}
-
-.block {
-  left: -50px;
-  z-index: 90;
-  height: 300px;
-  width: 250px;
+.doughnutName{
+  position: relative;
+  top: -42%;
+  left: 43%;
 }

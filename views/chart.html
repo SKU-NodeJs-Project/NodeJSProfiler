@@ -60,10 +60,12 @@
     <div>
       <canvas class="barChart none"></canvas>
       <canvas class="lineChart none"></canvas>
-
-      <div class="flex">
+      <div class="graphBox none">
         {% for i in range(labelNum) %}
-        <canvas class="doughnutChart{{ i + 1 }} none"></canvas>
+        <div class="graphDetail">
+          <canvas class="doughnutChart{{ i + 1 }}"></canvas>
+          <span class="doughnutName">{{xLabel}}{{i+1}}</span>
+        </div>
         {% endfor %}
       </div>
     </div>
@@ -129,14 +131,10 @@
 
 
   //그래프 띄워주는 로직
-  // let ctx = document.getElementById("myChart").getContext('2d');
   let ctx = document.querySelector(`.barChart`).getContext('2d');
   let ctx1 = document.querySelector(`.lineChart`).getContext('2d');
-  // let ctx2 = document.querySelector(`.doughnutChart1`).getContext('2d');
-  // let ctx3 = document.querySelector(`.doughnutChart2`).getContext('2d');
-  // let ctx4 = document.querySelector(`.doughnutChart3`).getContext('2d');
-  var first = document.getElementById("first");
-  var second = document.getElementById("second");
+  let first = document.getElementById("first");
+  let second = document.getElementById("second");
 
   console.log(ctx, ctx1, "{{graphType}}")
 
@@ -246,9 +244,9 @@
       });
     }
     if ("{{graphType}}" === "doughnut") {
+      document.querySelector(`.graphBox`).classList.remove('none');
       for (let i = 1; i <= '{{labelNum}}'; i++) {
         var ctx2 = document.querySelector(`.doughnutChart${i}`).getContext('2d');
-        document.querySelector(`.doughnutChart${i}`).classList.remove('none');
         var myChart = new Chart(ctx2, {
           type: "doughnut",
           outlabels: "core",
@@ -288,7 +286,6 @@
 
     }
   }
-
 
   const savedValue = localStorage.getItem("selectedGraph");
   if (savedValue) {
