@@ -1,6 +1,6 @@
 function max(arr) {
   let max = 0;
-  for (let i = 0; i < 10; i++){
+  for (let i = 0; i < arr.length; i++){
     if(max < arr[i]) max = arr[i];
   }
   return max;
@@ -18,7 +18,7 @@ function avg(arr) {
 
 function min(arr) {
   let min = Number.MAX_SAFE_INTEGER;
-  for (let i = 0; i < 10; i++){
+  for (let i = 0; i < arr.length; i++){
     if(min > arr[i]) min = arr[i];
   }
   return min;
